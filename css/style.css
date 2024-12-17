@@ -1,0 +1,107 @@
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: rgb(249, 234, 206);
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #222; 
+  font-weight: 700; 
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-size: 19px; 
+  font-weight: 400; 
+  color: #4a4a4a; 
+  margin-top: 10px;
+  margin-bottom: 20px; 
+}
+
+#controls {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+label {
+  font-size: 1rem;
+  font-weight: 400; 
+  color: black;
+}
+
+/*Dropdown Styling*/
+select {
+  font-size: 1rem;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+
+select:hover {
+  border-color: #0073e6;
+}
+
+select:focus {
+  border-color: #0073e6;
+  box-shadow: 0 0 5px rgba(0, 115, 230, 0.4);
+}
+
+#chart {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+svg {
+  background: #fdfdfd;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tooltip Styling */
+.tooltip {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #0073e6;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #333;
+  pointer-events: none;
+  display: none;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tooltip.show {
+  display: block;
+  transition: opacity 0.4s ease;
+}
+
+/* Legends */
+.legends {
+  font-family: 'Roboto', Arial, sans-serif;
+}
+
+.legends text {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.legends .legend-title {
+  font-weight: 700;
+  font-size: 16px;
+  fill: #333;
+}

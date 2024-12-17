@@ -1,0 +1,229 @@
+Country,Year,Variable,Subcategory,Value,SPH,Overweight (%),Obese (%),Overweight or Obese (%),Healthy (%)
+France,2019,Frequency,Never,46,89.5,27.58,12.22,39.8,60.2
+France,2020,Frequency,Never,45,92.8,27.92,11.97,39.9,60.1
+France,2021,Frequency,Never,45,91.7,27.35,12.35,39.7,60.3
+France,2022,Frequency,Never,45,89.8,27.11,12.49,39.6,60.4
+France,2019,Frequency,Regularly,6,89.5,27.58,12.22,39.8,60.2
+France,2020,Frequency,Regularly,6,92.8,27.92,11.97,39.9,60.1
+France,2021,Frequency,Regularly,7,91.7,27.35,12.35,39.7,60.3
+France,2022,Frequency,Regularly,8,89.8,27.11,12.49,39.6,60.4
+France,2019,Frequency,Seldom,12,89.5,27.58,12.22,39.8,60.2
+France,2020,Frequency,Seldom,12,92.8,27.92,11.97,39.9,60.1
+France,2021,Frequency,Seldom,13,91.7,27.35,12.35,39.7,60.3
+France,2022,Frequency,Seldom,14,89.8,27.11,12.49,39.6,60.4
+France,2019,Frequency,Some Regularity,30,89.5,27.58,12.22,39.8,60.2
+France,2020,Frequency,Some Regularity,31,92.8,27.92,11.97,39.9,60.1
+France,2021,Frequency,Some Regularity,32,91.7,27.35,12.35,39.7,60.3
+France,2022,Frequency,Some Regularity,33,89.8,27.11,12.49,39.6,60.4
+France,2019,Moderate Activity,< 60 min,57,89.5,27.58,12.22,39.8,60.2
+France,2020,Moderate Activity,< 60 min,57,92.8,27.92,11.97,39.9,60.1
+France,2021,Moderate Activity,< 60 min,57,91.7,27.35,12.35,39.7,60.3
+France,2022,Moderate Activity,< 60 min,57,89.8,27.11,12.49,39.6,60.4
+France,2019,Moderate Activity,> 120 min,8,89.5,27.58,12.22,39.8,60.2
+France,2020,Moderate Activity,> 120 min,8,92.8,27.92,11.97,39.9,60.1
+France,2021,Moderate Activity,> 120 min,8,91.7,27.35,12.35,39.7,60.3
+France,2022,Moderate Activity,> 120 min,8,89.8,27.11,12.49,39.6,60.4
+France,2019,Moderate Activity,> 60 min,19,89.5,27.58,12.22,39.8,60.2
+France,2020,Moderate Activity,> 60 min,20,92.8,27.92,11.97,39.9,60.1
+France,2021,Moderate Activity,> 60 min,21,91.7,27.35,12.35,39.7,60.3
+France,2022,Moderate Activity,> 60 min,23,89.8,27.11,12.49,39.6,60.4
+France,2019,Moderate Activity,Never,14,89.5,27.58,12.22,39.8,60.2
+France,2020,Moderate Activity,Never,13,92.8,27.92,11.97,39.9,60.1
+France,2021,Moderate Activity,Never,12,91.7,27.35,12.35,39.7,60.3
+France,2022,Moderate Activity,Never,11,89.8,27.11,12.49,39.6,60.4
+France,2019,Reason,Accessibility,2,89.5,27.58,12.22,39.8,60.2
+France,2020,Reason,Accessibility,2,92.8,27.92,11.97,39.9,60.1
+France,2021,Reason,Accessibility,2,91.7,27.35,12.35,39.7,60.3
+France,2022,Reason,Accessibility,3,89.8,27.11,12.49,39.6,60.4
+France,2019,Reason,Disability,16,89.5,27.58,12.22,39.8,60.2
+France,2020,Reason,Disability,16,92.8,27.92,11.97,39.9,60.1
+France,2021,Reason,Disability,16,91.7,27.35,12.35,39.7,60.3
+France,2022,Reason,Disability,17,89.8,27.11,12.49,39.6,60.4
+France,2019,Reason,Discrimination,0,89.5,27.58,12.22,39.8,60.2
+France,2020,Reason,Discrimination,0,92.8,27.92,11.97,39.9,60.1
+France,2021,Reason,Discrimination,0,91.7,27.35,12.35,39.7,60.3
+France,2022,Reason,Discrimination,1,89.8,27.11,12.49,39.6,60.4
+France,2019,Reason,Expensive,11,89.5,27.58,12.22,39.8,60.2
+France,2020,Reason,Expensive,11,92.8,27.92,11.97,39.9,60.1
+France,2021,Reason,Expensive,11,91.7,27.35,12.35,39.7,60.3
+France,2022,Reason,Expensive,11,89.8,27.11,12.49,39.6,60.4
+France,2019,Reason,No Friends,5,89.5,27.58,12.22,39.8,60.2
+France,2020,Reason,No Friends,4,92.8,27.92,11.97,39.9,60.1
+France,2021,Reason,No Friends,4,91.7,27.35,12.35,39.7,60.3
+France,2022,Reason,No Friends,4,89.8,27.11,12.49,39.6,60.4
+France,2019,Reason,Dislikes Competition,8,89.5,27.58,12.22,39.8,60.2
+France,2020,Reason,Dislikes Competition,8,92.8,27.92,11.97,39.9,60.1
+France,2021,Reason,Dislikes Competition,8,91.7,27.35,12.35,39.7,60.3
+France,2022,Reason,Dislikes Competition,9,89.8,27.11,12.49,39.6,60.4
+France,2019,Reason,No Time,40,89.5,27.58,12.22,39.8,60.2
+France,2020,Reason,No Time,39,92.8,27.92,11.97,39.9,60.1
+France,2021,Reason,No Time,38,91.7,27.35,12.35,39.7,60.3
+France,2022,Reason,No Time,37,89.8,27.11,12.49,39.6,60.4
+France,2019,Vigorous Activity,< 60 min,40,89.5,27.58,12.22,39.8,60.2
+France,2020,Vigorous Activity,< 60 min,40,92.8,27.92,11.97,39.9,60.1
+France,2021,Vigorous Activity,< 60 min,41,91.7,27.35,12.35,39.7,60.3
+France,2022,Vigorous Activity,< 60 min,42,89.8,27.11,12.49,39.6,60.4
+France,2019,Vigorous Activity,> 120 min,12,89.5,27.58,12.22,39.8,60.2
+France,2020,Vigorous Activity,> 120 min,11,92.8,27.92,11.97,39.9,60.1
+France,2021,Vigorous Activity,> 120 min,10,91.7,27.35,12.35,39.7,60.3
+France,2022,Vigorous Activity,> 120 min,10,89.8,27.11,12.49,39.6,60.4
+France,2019,Vigorous Activity,> 60 min,21,89.5,27.58,12.22,39.8,60.2
+France,2020,Vigorous Activity,> 60 min,22,92.8,27.92,11.97,39.9,60.1
+France,2021,Vigorous Activity,> 60 min,23,91.7,27.35,12.35,39.7,60.3
+France,2022,Vigorous Activity,> 60 min,24,89.8,27.11,12.49,39.6,60.4
+France,2019,Vigorous Activity,Never,26,89.5,27.58,12.22,39.8,60.2
+France,2020,Vigorous Activity,Never,25,92.8,27.92,11.97,39.9,60.1
+France,2021,Vigorous Activity,Never,24,91.7,27.35,12.35,39.7,60.3
+France,2022,Vigorous Activity,Never,24,89.8,27.11,12.49,39.6,60.4
+Italy,2019,Frequency,Never,62,94.3,35.4,11,46.4,53.6
+Italy,2020,Frequency,Never,60,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Frequency,Never,58,95.5,34.2,12,46.2,53.8
+Italy,2022,Frequency,Never,56,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Frequency,Regularly,1,94.3,35.4,11,46.4,53.6
+Italy,2020,Frequency,Regularly,1,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Frequency,Regularly,2,95.5,34.2,12,46.2,53.8
+Italy,2022,Frequency,Regularly,3,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Frequency,Seldom,10,94.3,35.4,11,46.4,53.6
+Italy,2020,Frequency,Seldom,10,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Frequency,Seldom,10,95.5,34.2,12,46.2,53.8
+Italy,2022,Frequency,Seldom,10,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Frequency,Some Regularity,27,94.3,35.4,11,46.4,53.6
+Italy,2020,Frequency,Some Regularity,28,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Frequency,Some Regularity,29,95.5,34.2,12,46.2,53.8
+Italy,2022,Frequency,Some Regularity,31,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Moderate Activity,< 60 min,60,94.3,35.4,11,46.4,53.6
+Italy,2020,Moderate Activity,< 60 min,61,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Moderate Activity,< 60 min,63,95.5,34.2,12,46.2,53.8
+Italy,2022,Moderate Activity,< 60 min,65,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Moderate Activity,> 120 min,1,94.3,35.4,11,46.4,53.6
+Italy,2020,Moderate Activity,> 120 min,1,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Moderate Activity,> 120 min,1,95.5,34.2,12,46.2,53.8
+Italy,2022,Moderate Activity,> 120 min,1,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Moderate Activity,> 60 min,12,94.3,35.4,11,46.4,53.6
+Italy,2020,Moderate Activity,> 60 min,14,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Moderate Activity,> 60 min,16,95.5,34.2,12,46.2,53.8
+Italy,2022,Moderate Activity,> 60 min,19,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Moderate Activity,Never,26,94.3,35.4,11,46.4,53.6
+Italy,2020,Moderate Activity,Never,22,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Moderate Activity,Never,18,95.5,34.2,12,46.2,53.8
+Italy,2022,Moderate Activity,Never,15,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Reason,Accessibility,4,94.3,35.4,11,46.4,53.6
+Italy,2020,Reason,Accessibility,5,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Reason,Accessibility,6,95.5,34.2,12,46.2,53.8
+Italy,2022,Reason,Accessibility,7,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Reason,Disability,7,94.3,35.4,11,46.4,53.6
+Italy,2020,Reason,Disability,7,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Reason,Disability,7,95.5,34.2,12,46.2,53.8
+Italy,2022,Reason,Disability,7,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Reason,Discrimination,0,94.3,35.4,11,46.4,53.6
+Italy,2020,Reason,Discrimination,1,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Reason,Discrimination,2,95.5,34.2,12,46.2,53.8
+Italy,2022,Reason,Discrimination,3,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Reason,Expensive,9,94.3,35.4,11,46.4,53.6
+Italy,2020,Reason,Expensive,9,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Reason,Expensive,9,95.5,34.2,12,46.2,53.8
+Italy,2022,Reason,Expensive,10,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Reason,No Friends,3,94.3,35.4,11,46.4,53.6
+Italy,2020,Reason,No Friends,4,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Reason,No Friends,5,95.5,34.2,12,46.2,53.8
+Italy,2022,Reason,No Friends,7,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Reason,Dislikes Competition,11,94.3,35.4,11,46.4,53.6
+Italy,2020,Reason,Dislikes Competition,12,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Reason,Dislikes Competition,14,95.5,34.2,12,46.2,53.8
+Italy,2022,Reason,Dislikes Competition,16,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Reason,No Time,40,94.3,35.4,11,46.4,53.6
+Italy,2020,Reason,No Time,40,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Reason,No Time,40,95.5,34.2,12,46.2,53.8
+Italy,2022,Reason,No Time,40,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Vigorous Activity,< 60 min,49,94.3,35.4,11,46.4,53.6
+Italy,2020,Vigorous Activity,< 60 min,47,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Vigorous Activity,< 60 min,46,95.5,34.2,12,46.2,53.8
+Italy,2022,Vigorous Activity,< 60 min,45,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Vigorous Activity,> 120 min,2,94.3,35.4,11,46.4,53.6
+Italy,2020,Vigorous Activity,> 120 min,2,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Vigorous Activity,> 120 min,2,95.5,34.2,12,46.2,53.8
+Italy,2022,Vigorous Activity,> 120 min,2,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Vigorous Activity,> 60 min,16,94.3,35.4,11,46.4,53.6
+Italy,2020,Vigorous Activity,> 60 min,16,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Vigorous Activity,> 60 min,17,95.5,34.2,12,46.2,53.8
+Italy,2022,Vigorous Activity,> 60 min,18,95.6,33.7,12.5,46.2,53.8
+Italy,2019,Vigorous Activity,Never,33,94.3,35.4,11,46.4,53.6
+Italy,2020,Vigorous Activity,Never,33,94.9,36.1,11.5,47.6,52.4
+Italy,2021,Vigorous Activity,Never,34,95.5,34.2,12,46.2,53.8
+Italy,2022,Vigorous Activity,Never,35,95.6,33.7,12.5,46.2,53.8
+Netherlands,2019,Frequency,Never,31,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Frequency,Never,29,90.2,38.08,14.87,53,47
+Netherlands,2021,Frequency,Never,27,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Frequency,Never,25,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Frequency,Regularly,6,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Frequency,Regularly,6,90.2,38.08,14.87,53,47
+Netherlands,2021,Frequency,Regularly,6,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Frequency,Regularly,7,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Frequency,Seldom,12,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Frequency,Seldom,13,90.2,38.08,14.87,53,47
+Netherlands,2021,Frequency,Seldom,14,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Frequency,Seldom,15,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Frequency,Some Regularity,51,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Frequency,Some Regularity,51,90.2,38.08,14.87,53,47
+Netherlands,2021,Frequency,Some Regularity,52,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Frequency,Some Regularity,53,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Moderate Activity,< 60 min,60,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Moderate Activity,< 60 min,61,90.2,38.08,14.87,53,47
+Netherlands,2021,Moderate Activity,< 60 min,62,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Moderate Activity,< 60 min,64,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Moderate Activity,> 120 min,10,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Moderate Activity,> 120 min,9,90.2,38.08,14.87,53,47
+Netherlands,2021,Moderate Activity,> 120 min,8,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Moderate Activity,> 120 min,8,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Moderate Activity,> 60 min,20,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Moderate Activity,> 60 min,21,90.2,38.08,14.87,53,47
+Netherlands,2021,Moderate Activity,> 60 min,22,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Moderate Activity,> 60 min,24,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Moderate Activity,Never,9,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Moderate Activity,Never,7,90.2,38.08,14.87,53,47
+Netherlands,2021,Moderate Activity,Never,5,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Moderate Activity,Never,4,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Reason,Accessibility,1,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Reason,Accessibility,1,90.2,38.08,14.87,53,47
+Netherlands,2021,Reason,Accessibility,1,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Reason,Accessibility,2,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Reason,Disability,14,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Reason,Disability,14,90.2,38.08,14.87,53,47
+Netherlands,2021,Reason,Disability,15,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Reason,Disability,16,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Reason,Discrimination,0,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Reason,Discrimination,0,90.2,38.08,14.87,53,47
+Netherlands,2021,Reason,Discrimination,0,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Reason,Discrimination,0,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Reason,Expensive,7,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Reason,Expensive,8,90.2,38.08,14.87,53,47
+Netherlands,2021,Reason,Expensive,10,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Reason,Expensive,12,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Reason,No Friends,1,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Reason,No Friends,2,90.2,38.08,14.87,53,47
+Netherlands,2021,Reason,No Friends,3,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Reason,No Friends,4,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Reason,Dislikes Competition,6,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Reason,Dislikes Competition,7,90.2,38.08,14.87,53,47
+Netherlands,2021,Reason,Dislikes Competition,9,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Reason,Dislikes Competition,11,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Reason,No Time,38,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Reason,No Time,39,90.2,38.08,14.87,53,47
+Netherlands,2021,Reason,No Time,40,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Reason,No Time,42,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Vigorous Activity,< 60 min,42,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Vigorous Activity,< 60 min,43,90.2,38.08,14.87,53,47
+Netherlands,2021,Vigorous Activity,< 60 min,45,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Vigorous Activity,< 60 min,47,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Vigorous Activity,> 120 min,12,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Vigorous Activity,> 120 min,11,90.2,38.08,14.87,53,47
+Netherlands,2021,Vigorous Activity,> 120 min,10,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Vigorous Activity,> 120 min,9,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Vigorous Activity,> 60 min,28,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Vigorous Activity,> 60 min,29,90.2,38.08,14.87,53,47
+Netherlands,2021,Vigorous Activity,> 60 min,30,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Vigorous Activity,> 60 min,31,82.3,37.37,16.38,53.8,46.2
+Netherlands,2019,Vigorous Activity,Never,18,87.3,38.23,16.27,54.5,45.5
+Netherlands,2020,Vigorous Activity,Never,16,90.2,38.08,14.87,53,47
+Netherlands,2021,Vigorous Activity,Never,14,84.9,37.23,15.22,52.4,47.6
+Netherlands,2022,Vigorous Activity,Never,13,82.3,37.37,16.38,53.8,46.2
