@@ -433,3 +433,9 @@ function updateCircles(year) {
     addWedgeCirclesToHex(lowerLeftHex, year, "LL", "duration_exercise");
     addWedgeCirclesToHex(lowerRightHex, year, "LR", "vegetables");
 }
+
+d3.select("#yearSlider").on("input", function () {
+    const selectedYear = this.value;
+    d3.select("#yearDisplay").text(selectedYear);
+    updateCircles(selectedYear);
+});
