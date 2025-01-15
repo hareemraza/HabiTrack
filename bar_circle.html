@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sports Data Widget</title>
+
+    <!-- libs -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+    <!-- Your donut code -->
+    <script src="./js/bar_circle.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="./css/bar_circle.css" />
+
+    <style>
+        .chart-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            margin-left: 50px;
+            background-color: rgba(255, 0, 0, 0);
+        }
+		/* The container that holds your dropdown and label */
+        .year-selector-container {
+            text-align: center; 
+            margin-top: 20px;
+        }
+
+        /* Style for the <label> */
+        .year-selector-container label {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-weight: 600;
+            font-size: 16px;
+            margin-right: 10px;
+            color: #333;
+        }
+
+        /* Style for the dropdown <select> */
+        #yearSelect {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            outline: none;
+            /* optional: add a drop-shadow or transition */
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+
+        #yearSelect:hover {
+            border: 1px solid #888;
+        }
+
+        #yearSelect:focus {
+            border: 1px solid #555;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+
+    </style>
+</head>
+
+<body>
+    <!-- Dropdown container -->
+    <div class="year-selector-container">
+        <label for="yearSelect">Year:</label>
+        <select id="yearSelect">
+            <option value="2019" selected>2019</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+        </select>
+    </div>
+
+    <div class="chart-container">
+        <div class="barchart" id="chart1" data-width="150" data-height="210" data-r="100" data-ir="130" data-country="France">
+        </div>
+        <div class="barchart" id="chart2" data-width="150" data-height="210" data-r="100" data-ir="130" data-country="Netherlands">
+        </div>
+        <div class="barchart" id="chart3" data-width="150" data-height="210" data-r="100" data-ir="130" data-country="Italy">
+        </div>
+    </div>
+
+</body>
+</html>
