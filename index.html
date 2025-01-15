@@ -3,27 +3,32 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HabiTrack</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <!-- Fonts & Styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+
+  <!-- D3 Library -->
   <script src="https://d3js.org/d3.v7.min.js" defer></script>
+
+  <!-- First Plot (Honeycomb) -->
   <script src="js/honeycomb.js" defer></script>
 </head>
 
 <body>
+  <!-- 1) FIRST PLOT: Honeycomb Visualization -->
   <h1>Yearly Trends in Students' Health Outcomes, Exercise, and Dietary Habits</h1>
   <p class="subtitle">
     How Have Good BMI, Self-Perceived Health, and Positive Health Habits Changed Together Over Time?
   </p>
 
-  <!-- Honeycomb -->
   <div id="honeycomb"></div>
 
   <!-- Slider to control year -->
   <div class="slider-container">
     <label for="yearSlider">Select Year: </label>
-    <input type="range" id="yearSlider" min="2019" max="2022" value="2022" step="1">
+    <input type="range" id="yearSlider" min="2019" max="2022" value="2022" step="1"/>
     <span id="yearDisplay">2022</span>
   </div>
 
@@ -45,19 +50,51 @@
       <span>SPH = Self-Perceived Health</span>
     </div>
   </div>
+
+  <!-- 2) SECOND PLOT: Correlation Scatterplot -->
   <h1>Relationship between Students' Dietary and Physical Habits and their Actual and Self-Perceived Health (SPH)</h1>
   <p class="subtitle">
     Do Students' Health Habits Correlate Differently with BMI and SPH Across Countries?
   </p>
+
+  <!-- Controls for the second plot -->
   <div id="controls">
     <label for="y-axis-select">Select Health Factor:</label>
     <select id="y-axis-select">
+      <!-- Populated by script.js -->
       <option value="" disabled selected></option>
     </select>
   </div>
+
+  <!-- Container for the second plot -->
   <div id="chart"></div>
 
+  <!-- Scripts (in order) -->
   <script src="js/script.js" defer></script>
+
+    <!-- 3) THIRD PLOT: Ranking (Podium) -->
+    <h1>Ranking of Countries Based on Various Health Factors</h1>
+    <p class="subtitle">
+      Which Country Ranks the Best in Various Diet and Physical Health Factors??
+    </p>
+  
+    <!-- Controls for the third plot -->
+    <div id="controls-rank">
+      <label for="y-axis-select-rank">Select Ranking Factor:</label>
+      <select id="y-axis-select-rank">
+        <!-- You can adjust/add more options if desired -->
+        <option value="Fruit Consumption (%)" selected>Daily Fruit Consumption</option>
+        <option value="Vegetable Consumption (%)">Daily Vegetable Consumption</option>
+        <option value="SPH">Self-Perceived Health (SPH)</option>
+      </select>
+    </div>
+  
+    <!-- Container for the third plot -->
+    <div id="rank-chart">
+      <script src="js/rank.js" defer></script>
+  
+    </div>
+  
 </body>
 
 </html>
