@@ -28,4 +28,4 @@
 ## Questions
 - How long should the text be?
 - Pie chart vs Donut chart
-- Overall Year?
+- Should we Include an Overall Category for Year?
