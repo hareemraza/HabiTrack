@@ -133,23 +133,6 @@ $(document).ready(function () {
             .attr("dy", "-0.5em")            // Adjust the position under the arc
             .text(formattedTotal)         // The text to display //EURO stat 2021
 
-        // var info = svg.append('g')
-        //     .append("text")
-        //     .attr("text-anchor", "middle")  // Center the text
-        //     .attr("x", 5)           // Horizontally center the text in the SVG 
-        //     .attr("y", -10)
-        //     .attr("class", "info")         // Vertically position the text in the middle
-        //     .attr("dy", "-0.5em")            // Adjust the position under the arc
-        //     .text("\u{1F449} But what does kg CO2 equivalent mean?")
-
-        // var info2 = svg.append('g')
-        //     .append("text")
-        //     .attr("text-anchor", "middle")  // Center the text
-        //     .attr("x", 5)           // Horizontally center the text in the SVG
-        //     .attr("y", 10)
-        //     .attr("class", "info")         // Vertically position the text in the middle
-        //     .attr("dy", "-0.5em")            // Adjust the position under the arc
-        //     .text("\u{1F9EE} How did we calculate this?")
         //__ text
         var segments = svg.append('g').attr('class', 'segments');
 
@@ -321,50 +304,9 @@ $(document).ready(function () {
         </span>
     </div>`
         source = `<div class="top-right-content_dets" style="text-align: center; margin-bottom:10px;">Source: <a href="https://www.cbs.nl/en-gb/news/2019/37/greenhouse-gas-emissions-down/co2-equivalents" target="_blank">Statistics Netherlands</a></div>`
-        // var topRightDiv = d3.select(`#${containerId}`).append("div")
-        //     .attr("class", "top-right-content")
-        //     .attr("id", "info-popup-container")
-        //     .style("opacity", 0)
-        //     .html(htmlContent + dets + dets2 + source);
-        //__ unit explaination
-        // info.on("click", function (event, d) {
-        //     topRightDiv.transition()
-        //         .duration(200)
-        //         .style("opacity", 0.9);
-        //     topRightDiv.style("right", 0 + "px")
-        //         .style("top", "0%")
-        //         .style("width", 500 + "px")
-        //         .style("height", 320 + "px");
-        // });
-        // info.on("doubleclick", function(event, d) {
-        //     topRightDiv.transition()
-        //     .duration(500)
-        //     .style("opacity", 0);
-        // });
 
         //__ calaculation explaination
         dets_calc = `<div class="top-right-content_dets" style="text-align: center; margin-bottom:10px;"><span style="color: black;">Production in Kg * Average Kg CO2 eq</span></div>`
-        // var topRightDiv_calc = d3.select(`#${containerId}`).append("div")
-        //     .attr("class", "top-right-content")
-        //     .style("opacity", 0)
-        //     .html(dets_calc);
-        // info2.on("mouseover", function (event, d) {
-        //     const rect = this.getBoundingClientRect();
-        //     topRightDiv_calc.transition()
-        //         .duration(200)
-        //         .style("opacity", 0.9);
-        //     topRightDiv_calc.style("left", (rect.x) + "px")
-        //         .style("top", (rect.y + rect.height) + "px")
-        //         .style("width", (rect.width) + "px")
-        //         .style("height", (rect.height) + "px")
-        //         .style("font-size", "10px");
-        // });
-        // info2.on("mouseout", function (event, d) {
-        //     topRightDiv_calc.transition()
-        //         .duration(500)
-        //         .style("opacity", 0);
-        // });
-
 
     }
 });
