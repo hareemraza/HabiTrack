@@ -24,3 +24,8 @@
 - Fix headings
 - Add sports related data
 - Fix visually
+
+## Questions
+- How long should the text be?
+- Pie chart vs Donut chart
+- Overall Year?
