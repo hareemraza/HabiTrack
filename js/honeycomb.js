@@ -1,441 +1,471 @@
 const widthHC = 900;
-const heightHC = 700;
+const heightHC = 500;
+let selectedCountry = null;
 
 // Create SVG container
 const svgHC = d3
-    .select("#honeycomb")
-    .append("svg")
-    .attr("width", widthHC)
-    .attr("height", heightHC);
-
+  .select("#honeycomb")
+  .append("svg")
+  .attr("width", widthHC)
+  .attr("height", heightHC);
+//   .style("border", "1px solid #ccc")
 // Add Title
 svgHC
-    .append("text")
-    .attr("x", widthHC / 2)
-    .attr("y", 50) // Corrected the y value
-    .attr("text-anchor", "middle")
-    .style("font-size", "18px")
-    .text("Overall Health Outcomes");
+  .append("text")
+  .attr("x", widthHC / 2)
+  .attr("y", 40)
+  .attr("text-anchor", "middle")
+  .style("font-size", "20px")
+  .style("font-weight", "bold");
+  // Sub-head / description
+svgHC
+  .append("text")
+  .attr("x", widthHC / 2)
+  .attr("y", 60)
+  .attr("text-anchor", "middle")
+  .style("font-size", "14px");
 
-// Create a single elongated hexagon in the center
-const hexagonPoints = (cx, cy, width, height) => {
-    const w = width / 2;
-    const h = height / 2;
-    return [
-        [cx - w, cy],
-        [cx - w / 2, cy - h],
-        [cx + w / 2, cy - h],
-        [cx + w, cy],
-        [cx + w / 2, cy + h],
-        [cx - w / 2, cy + h]
-    ];
-};
-
-const mainHexCenterX = widthHC / 2;
-const mainHexCenterY = heightHC / 2;
-const mainHex = hexagonPoints(mainHexCenterX, mainHexCenterY, 800 - 300, 400 - 250);
-
-svgHC.append("polygon")
-    .attr("points", mainHex.map(d => d.join(",")).join(" "))
-    .attr("fill", "#f9f9f9")
-    .attr("stroke", "#ccc")
-    .attr("stroke-width", 2);
-
-// Add vertical divider aligned with the hexagon's top and bottom
-svgHC.append("line")
-    .attr("x1", widthHC / 2)
-    .attr("y1", mainHex[1][1]) // Top of the hexagon
-    .attr("x2", widthHC / 2)
-    .attr("y2", mainHex[4][1]) // Bottom of the hexagon
-    .attr("stroke", "#ccc")
-    .attr("stroke-width", 2);
-
-// Add section titles
-svgHC.append("text")
-    .attr("x", mainHex[1][0] + 50)
-    .attr("y", mainHex[1][1] + 20)
-    .attr("text-anchor", "middle")
-    .style("font-size", "16px")
-    .text("% Good BMI");
-
-svgHC.append("text")
-    .attr("x", widthHC / 2 + 70)
-    .attr("y", mainHex[1][1] + 20)
-    .attr("text-anchor", "middle")
-    .style("font-size", "16px")
-    .text("% Good SPH");
-
+// Global data arrays
 let healthDataAll = [];
 let sportsDataAll = [];
 const countries = ["France", "Italy", "Netherlands"];
 
-// Load Health Data
-d3.csv("data/health_data.csv").then(data => {
-    healthDataAll = data;
-    healthDataAll.forEach(d => {
-        d["SPH"] = +d["SPH"];
-        d["Healthy (%)"] = +d["Healthy (%)"];
-        d["Fruit Consumption (%)"] = +d["Fruit Consumption (%)"];
-        d["Vegetable Consumption (%)"] = +d["Vegetable Consumption (%)"];
-    });
-    // Once health data is loaded, if sportsDataAll is also loaded, call updateCircles
-    if (sportsDataAll.length > 0) updateCircles("2022");
-});
-
-// Load Sports Data
-d3.csv("data/sports_data.csv").then(data => {
-    sportsDataAll = data;
-    sportsDataAll.forEach(d => {
-        // Convert numeric fields
-        if (d["Exercise Frequency (Regularly)"] !== undefined) d["Exercise Frequency (Regularly)"] = +d["Exercise Frequency (Regularly)"];
-        if (d["Exercise Frequency (Some Regularity)"] !== undefined) d["Exercise Frequency (Some Regularity)"] = +d["Exercise Frequency (Some Regularity)"];
-        if (d["Vigorous Activity (Never)"] !== undefined) d["Vigorous Activity (Never)"] = +d["Vigorous Activity (Never)"];
-    });
-    // If healthDataAll is loaded too, call updateCircles
-    if (healthDataAll.length > 0) updateCircles("2022");
-});
-
 // Color scale
 const colorScaleHC = d3.scaleOrdinal()
-    .domain(countries)
-    .range(["rgb(0, 112, 192)", "rgb(0, 128, 0)", "rgb(255, 165, 0)"]);
+  .domain(countries)
+  .range(["rgb(0, 112, 192)", "rgb(0, 128, 0)", "rgb(255, 165, 0)"]);
 
-const topY = () => mainHex[1][1];
-const bottomY = () => mainHex[4][1];
-const leftXMax = widthHC / 2; // divider
-const rightXMin = widthHC / 2;
-const leftSectionMargin = 30;
-const rightSectionMargin = 30;
+/* ---------------------------------------------------
+   1) LOAD DATA
+---------------------------------------------------- */
+d3.csv("data/health_data.csv").then(data => {
+  healthDataAll = data;
+  healthDataAll.forEach(d => {
+    d.Year = d.Year;
+    d.Country = d.Country;
+    d.Sex = d.Sex;
+    d["SPH"] = +d["SPH"];
+    d["Healthy (%)"] = +d["Healthy (%)"];
+    d["Fruit Consumption (%)"] = +d["Fruit Consumption (%)"];
+    d["Vegetable Consumption (%)"] = +d["Vegetable Consumption (%)"];
+  });
+  if (sportsDataAll.length > 0) updateAll("2022");
+});
 
-function placeCirclesInRect(values, scale, rect, side) {
-    const W = rect.xMax - rect.xMin;
-    const H = rect.yMax - rect.yMin;
-    const Cx = rect.xMin + W / 2;
-    const Cy = rect.yMin + H / 2;
+d3.csv("data/sports_data.csv").then(data => {
+  sportsDataAll = data;
+  sportsDataAll.forEach(d => {
+    d.Year = d.Year;
+    d.Country = d.Country;
+  });
+  if (healthDataAll.length > 0) updateAll("2022");
+});
 
-    const largest = values[0];
-    const medium = values[1];
-    const smallest = values[2];
+/* ---------------------------------------------------
+   2) LAYOUT: Define bounding rectangles
+      for each metric (two center + four corners)
+---------------------------------------------------- */
 
-    const rLargest = scale(largest.value);
-    const rMedium = scale(medium.value);
-    const rSmallest = scale(smallest.value);
+// Center rectangles for Overall Health Outcomes (BMI & SPH)
+// Each rectangle is 80 px wide, with a 60 px gap in the middle
+const centerBMI = {
+    xMin: widthHC / 2 - 120, 
+    xMax: widthHC / 2 - 40, 
+    yMin: heightHC / 5,
+    yMax: heightHC / 1.6
+  };
+  
+  const centerSPH = {
+    xMin: widthHC / 2 + 40,  
+    xMax: widthHC / 2 + 120,
+    yMin: heightHC / 5,
+    yMax: heightHC / 1.6
+  };
+  
 
-    const xOffset = side === "left" ? -W / 4 - 50 : W / 4 + 50;
-    const largestCx = Cx + xOffset;
-    const largestCy = Cy;
+// Four corners
+const cornerMargin = 30;
+const rectWidth = 120;
+const rectHeight = 200;
 
-    const mediumCx = side === "left" ? Cx + W / 5 : Cx - W / 5;
-    const mediumCy = Cy - H / 5 + 10;
-
-    const smallestCx = side === "left" ? Cx : Cx;
-    const smallestCy = Cy + H / 2.5;
-
-    return [
-        { country: largest.country, value: largest.value, x: largestCx, y: largestCy, r: rLargest },
-        { country: medium.country, value: medium.value, x: mediumCx, y: mediumCy, r: rMedium },
-        { country: smallest.country, value: smallest.value, x: smallestCx, y: smallestCy, r: rSmallest }
-    ];
-}
-
-function drawCircles(circles) {
-    // Remove old circles and texts first
-    svgHC.selectAll("circle.data-circle").remove();
-    svgHC.selectAll("text.data-text").remove();
-
-    circles.forEach(c => {
-        svgHC.append("circle")
-            .attr("class", "data-circle")
-            .attr("cx", c.x)
-            .attr("cy", c.y)
-            .attr("r", c.r)
-            .attr("fill", "none")
-            .attr("stroke", colorScaleHC(c.country))
-            .attr("stroke-width", 2);
-
-        svgHC.append("text")
-            .attr("class", "data-text")
-            .attr("x", c.x)
-            .attr("y", c.y + 5)
-            .attr("text-anchor", "middle")
-            .attr("font-size", "14px")
-            .style("font-weight", "bold")
-            .text(`${(c.value).toFixed(1)}%`);
-    });
-}
-
-const regularHexagonPoints = (cx, cy, r, rotationAngle) => {
-    return Array.from({ length: 6 }, (_, i) => {
-        const angle = rotationAngle + (Math.PI / 3) * i; // 60° increments
-        return [cx + r * Math.cos(angle), cy + r * Math.sin(angle)];
-    });
+const topLeftRect = {
+  xMin: cornerMargin + cornerMargin * 5,
+  xMax: cornerMargin + rectWidth,
+  yMin: heightHC / 30,
+  yMax: rectHeight + 30
 };
 
-function addHexagonAlongEdge(start, end, colorFill = "#e0f7fa", colorStroke = "#0097a7") {
-    const edgeLength = Math.sqrt(
-        Math.pow(end[0] - start[0], 2) +
-        Math.pow(end[1] - start[1], 2)
-    );
-    const edgeAngle = Math.atan2(end[1] - start[1], end[0] - start[0]);
-    const vIndex = 2;
-    const vertexAngle = edgeAngle + vIndex * (Math.PI / 3);
-    const gap = -10;
-    const perpendicularAngle = edgeAngle + Math.PI / 2;
-    const chosenVertexX = start[0] + gap * Math.cos(perpendicularAngle);
-    const chosenVertexY = start[1] + gap * Math.sin(perpendicularAngle);
-    const newHexCenterX = chosenVertexX - edgeLength * Math.cos(vertexAngle);
-    const newHexCenterY = chosenVertexY - edgeLength * Math.sin(vertexAngle);
-    const newHexPoints = regularHexagonPoints(newHexCenterX, newHexCenterY, edgeLength, edgeAngle);
+const topRightRect = {
+  xMin: widthHC - cornerMargin - rectWidth * 3,
+  xMax: widthHC - cornerMargin,
+  yMin: heightHC / 30,
+  yMax: rectHeight + 30
+};
 
-    svgHC.append("polygon")
-        .attr("points", newHexPoints.map(d => d.join(",")).join(" "))
-        .attr("fill", colorFill)
-        .attr("stroke", colorStroke)
-        .attr("stroke-width", 2);
+const bottomLeftRect = {
+  xMin: cornerMargin + cornerMargin * 5,
+  xMax: cornerMargin + rectWidth,
+  yMin: heightHC / 1.8,
+  yMax: heightHC
+};
 
-    return { centerX: newHexCenterX, centerY: newHexCenterY, points: newHexPoints };
+const bottomRightRect = {
+  xMin: widthHC - cornerMargin - rectWidth * 3,
+  xMax: widthHC - cornerMargin,
+  yMin: heightHC / 1.8,
+  yMax: heightHC 
+};
+
+/* ---------------------------------------------------
+   3) HELPER FUNCTIONS
+---------------------------------------------------- */
+
+/**
+ * Calculate a minimum radius so the text fits entirely
+ * inside the circle without overflow.
+ */
+function computeMinRadiusForText(value, fontSize) {
+  // Example: if value = 57.3, text = "57.3%"
+  const textString = `${value.toFixed(1)}%`;
+  // Approximate width in pixels => # characters * (fontSize * 0.6)
+  const approximateTextWidth = textString.length * fontSize * 0.6;
+  return approximateTextWidth / 2 + 4;  // +4 px padding
 }
 
-const upperLeftStart = mainHex[0];
-const upperLeftEnd = mainHex[1];
-const upperLeftHex = addHexagonAlongEdge(upperLeftStart, upperLeftEnd);
+// A) Place circles in a vertical stack (largest at bottom)
+function placeCirclesVertically(values, scale, rect, fontSize = 12) {
+  // values sorted in descending order by .value
+  const centerX = (rect.xMin + rect.xMax) / 2;
+  let currentY = rect.yMax; // start from bottom
+  const circles = [];
 
-const upperRightStart = mainHex[2];
-const upperRightEnd = mainHex[3];
-const upperRightHex = addHexagonAlongEdge(upperRightStart, upperRightEnd);
+  for (let i = 0; i < values.length; i++) {
+    let dataVal = values[i].value;
+    let rFromScale = scale(dataVal);
 
-const lowerRightStart = mainHex[3];
-const lowerRightEnd = mainHex[4];
-const lowerRightHex = addHexagonAlongEdge(lowerRightStart, lowerRightEnd);
+    // Ensure the circle is big enough for text
+    let rMinText = computeMinRadiusForText(dataVal, fontSize);
+    let finalR = Math.max(rFromScale, rMinText);
 
-const lowerLeftStart = mainHex[5];
-const lowerLeftEnd = mainHex[0];
-const lowerLeftHex = addHexagonAlongEdge(lowerLeftStart, lowerLeftEnd);
-
-function linePolygonIntersection(polygon, x0, y0, angle) {
-    const cosA = Math.cos(angle);
-    const sinA = Math.sin(angle);
-    let closestPoint = null;
-    let closestDist = Infinity;
-
-    for (let i = 0; i < polygon.length; i++) {
-        const p1 = polygon[i];
-        const p2 = polygon[(i + 1) % polygon.length];
-
-        const x_e1 = p1[0], y_e1 = p1[1];
-        const x_e2 = p2[0], y_e2 = p2[1];
-
-        const dx_e = x_e2 - x_e1;
-        const dy_e = y_e2 - y_e1;
-
-        const denom = (cosA * (-dy_e)) - (sinA * (-dx_e));
-        if (Math.abs(denom) < 1e-9) continue;
-
-        const rhs1 = x_e1 - x0;
-        const rhs2 = y_e1 - y0;
-
-        const t = (rhs1 * (-dy_e) - rhs2 * (-dx_e)) / denom;
-
-        if (t > 0) {
-            const xI = x0 + t * cosA;
-            const yI = y0 + t * sinA;
-            const dist = Math.sqrt((xI - x0) ** 2 + (yI - y0) ** 2);
-
-            const u = (cosA * rhs2 - sinA * rhs1) / denom;
-            if (u >= 0 && u <= 1 && dist < closestDist) {
-                closestDist = dist;
-                closestPoint = [xI, yI];
-            }
-        }
-    }
-
-    return closestPoint;
-}
-
-function drawYShape(polygon, centerX, centerY) {
-    const initialAngle = 0;
-    for (let i = 0; i < 3; i++) {
-        const angle = initialAngle + (i * 2 * Math.PI) / 3;
-        const intersection = linePolygonIntersection(polygon, centerX, centerY, angle);
-        if (intersection) {
-            svgHC.append("line")
-                .attr("x1", centerX)
-                .attr("y1", centerY)
-                .attr("x2", intersection[0])
-                .attr("y2", intersection[1])
-                .attr("stroke", "#666")
-                .attr("stroke-width", 2);
-        }
-    }
-}
-
-drawYShape(upperLeftHex.points, upperLeftHex.centerX, upperLeftHex.centerY);
-drawYShape(upperRightHex.points, upperRightHex.centerX, upperRightHex.centerY);
-drawYShape(lowerRightHex.points, lowerRightHex.centerX, lowerRightHex.centerY);
-drawYShape(lowerLeftHex.points, lowerLeftHex.centerX, lowerLeftHex.centerY);
-
-// Titles for upper hexagons
-svgHC.append("text")
-    .attr("x", upperLeftHex.centerX)
-    .attr("y", upperLeftHex.points[5][1] - 10) // Position above the upper-left hexagon
-    .attr("text-anchor", "middle")
-    .style("font-size", "14px")
-    .style("font-weight", "bold")
-    .text("% of Students Exercising Frequently");
-
-svgHC.append("text")
-    .attr("x", upperRightHex.centerX)
-    .attr("y", upperRightHex.points[4][1] - 10) // Position above the upper-right hexagon
-    .attr("text-anchor", "middle")
-    .style("font-size", "14px")
-    .style("font-weight", "bold")
-    .text("% of Students Eating Fruits");
-
-// Titles for lower hexagons
-svgHC.append("text")
-    .attr("x", lowerLeftHex.centerX)
-    .attr("y", lowerLeftHex.points[4][1] + 15) // Position below the lower-left hexagon
-    .attr("text-anchor", "middle")
-    .style("font-size", "14px")
-    .style("font-weight", "bold")
-    .text("% of Students Exercising Vigorously");
-
-svgHC.append("text")
-    .attr("x", lowerRightHex.centerX)
-    .attr("y", lowerRightHex.points[5][1] + 15) // Position below the lower-right hexagon
-    .attr("text-anchor", "middle")
-    .style("font-size", "14px")
-    .style("font-weight", "bold")
-    .text("% of Students Eating Vegetables");
-
-// dataType: one of ["frequency_exercise", "duration_exercise", "fruits", "vegetables"]
-function addWedgeCirclesToHex(hex, year, hexName, dataType) {
-    let valuesByCountry = {};
-
-    if (dataType === "frequency_exercise" || dataType === "duration_exercise") {
-        // Filter sports data
-        const filteredSports = sportsDataAll.filter(d => d.Year === year && countries.includes(d.Country));
-        filteredSports.forEach(d => {
-            const c = d.Country;
-            if (dataType === "frequency_exercise") {
-                // Exercise Frequency (Regularly) + Exercise Frequency (Some Regularity)
-                const val = ((d["Exercise Frequency (Regularly)"] || 0) + (d["Exercise Frequency (Some Regularity)"] || 0));
-                valuesByCountry[c] = val;
-            } else if (dataType === "duration_exercise") {
-                // 100 - Vigorous Activity (Never)
-                const val = 100 - (d["Vigorous Activity (Never)"] || 0);
-                valuesByCountry[c] = val;
-            }
-        });
-    } else if (dataType === "fruits" || dataType === "vegetables") {
-        // Filter health data
-        const filteredHealth = healthDataAll.filter(d => d.Year === year && d.Sex === "Total" && countries.includes(d.Country));
-        filteredHealth.forEach(d => {
-            const c = d.Country;
-            if (dataType === "fruits") {
-                valuesByCountry[c] = d["Fruit Consumption (%)"] || 0;
-            } else if (dataType === "vegetables") {
-                valuesByCountry[c] = d["Vegetable Consumption (%)"] || 0;
-            }
-        });
-    }
-
-    const vals = Object.values(valuesByCountry);
-    if (vals.length === 0) return; // No data
-
-    const minVal = d3.min(vals);
-    const maxVal = d3.max(vals);
-    const rScale = d3.scaleLinear().domain([minVal, maxVal]).range([10, 25]);
-
-    // Fixed mapping of countries to wedge angles
-    const countryWedgeMap = {
-        "France": 60,       // Top-left wedge
-        "Italy": 180,       // Bottom wedge
-        "Netherlands": 300  // Top-right wedge
-    };
-
-    // Remove old wedge circles/text
-    svgHC.selectAll(".wedge-circle-" + hexName).remove();
-    svgHC.selectAll(".wedge-circle-text-" + hexName).remove();
-
-    // Add circles
-    countries.forEach(c => {
-        const val = valuesByCountry[c];
-        if (val == null) return;
-
-        const angleDeg = countryWedgeMap[c];
-        const angleRad = angleDeg * Math.PI / 180;
-
-        const radiusFromCenter = 70;
-        const cx = hex.centerX + radiusFromCenter * Math.cos(angleRad);
-        const cy = hex.centerY + radiusFromCenter * Math.sin(angleRad);
-
-        svgHC.append("circle")
-            .attr("class", "wedge-circle-" + hexName)
-            .attr("cx", cx)
-            .attr("cy", cy)
-            .attr("r", rScale(val) * 2)
-            .attr("fill", "none")
-            .attr("stroke", colorScaleHC(c))
-            .attr("stroke-width", 2);
-
-        svgHC.append("text")
-            .attr("class", "wedge-circle-text-" + hexName)
-            .attr("x", cx)
-            .attr("y", cy + 4)
-            .attr("text-anchor", "middle")
-            .attr("font-size", "10px")
-            .text(`${val.toFixed(1)}%`);
+    currentY -= finalR; // move up by radius
+    circles.push({
+      country: values[i].country,
+      value: dataVal,
+      x: centerX,
+      y: currentY,
+      r: finalR
     });
+    currentY -= (finalR + 10); // additional gap
+  }
+  return circles;
 }
 
-function updateCircles(year) {
-    if (healthDataAll.length === 0 || sportsDataAll.length === 0) return;
-    const filteredData = healthDataAll.filter(d => d.Year === year && d.Sex === "Total" && countries.includes(d.Country));
+function drawCircles(circles, classPrefix) {
+    //////////////////////////////////////////
+    // 1) CIRCLES: ENTER-UPDATE-EXIT
+    //////////////////////////////////////////
+    const circleSelection = svgHC.selectAll("circle." + classPrefix)
+      .data(circles, d => d.country);
+  
+    // EXIT
+    circleSelection.exit()
+      .transition().duration(600)
+      .attr("r", 0)
+      .remove();
+  
+    // ENTER
+    const circleEnter = circleSelection.enter()
+      .append("circle")
+      .attr("class", classPrefix)
+      .attr("fill", d => colorScaleHC(d.country))
+      .attr("stroke", "#666")
+      .attr("stroke-width", 1)
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y)
+      .attr("r", 0); // pop-in effect
+  
+    // ENTER + UPDATE (MERGE)
+    const circleMerge = circleEnter.merge(circleSelection);
+  
+    // Transition for circle positions and sizes
+    circleMerge
+      .transition().duration(600)
+      .attr("cx", d => d.x)
+      .attr("cy", d => d.y)
+      .attr("r", d => d.r);
+  
+    // HOVER EVENTS (optional)
+    circleMerge
+      .on("mouseover", function(event, d) {
+        svgHC.selectAll("circle." + classPrefix)
+          .transition().duration(200)
+          .style("opacity", 0.2);
+  
+        d3.select(this)
+          .transition().duration(200)
+          .attr("r", d.r * 1.2)
+          .attr("stroke-width", 3)
+          .style("opacity", 1);
+      })
+      .on("mouseout", function(event, d) {
+        svgHC.selectAll("circle." + classPrefix)
+          .transition().duration(200)
+          .attr("r", c => c.r)
+          .attr("stroke-width", 1)
+          .style("opacity", 1);
+      })
+      .on("click", function(event, d) {
+        if (selectedCountry === d.country) {
+          selectedCountry = null;
+        } else {
+          selectedCountry = d.country;
+        }
+        highlightByCountry(selectedCountry);
+      });
+  
+  
+    //////////////////////////////////////////
+    // 2) TEXT LABELS: ENTER-UPDATE-EXIT
+    //////////////////////////////////////////
+    const textSelection = svgHC.selectAll("text." + classPrefix)
+      .data(circles, d => d.country);
+  
+    // EXIT
+    textSelection.exit().remove();
+  
+    // ENTER
+    const textEnter = textSelection.enter()
+      .append("text")
+      .attr("class", classPrefix)
+      // Start font-size at 0 if you want a pop-in effect, or just start at 12
+      .attr("font-size", 12)
+      .style("font-weight", "bold")
+      .style("fill", "#fff")
+      .attr("text-anchor", "middle")
+      .attr("x", d => d.x)
+      .attr("y", d => d.y);
+  
+    // ENTER + UPDATE (MERGE)
+    textEnter.merge(textSelection)
+      .transition().duration(600)
+      .attr("x", d => d.x)
+      .attr("y", d => d.y + 4)
+      // --- KEY PART: dynamic font size ---
+      .attr("font-size", d => {
+        // e.g., 60% of the circle radius, with a minimum of 12 px
+        const dynamicFont = d.r * 0.6;
+        return Math.max(12, dynamicFont);
+      })
+      .text(d => d.value.toFixed(1));
+  }
+  
+  
+  function highlightByCountry(country) {
+    // If no country is selected (country === null),
+    // revert all circles/text to full opacity & normal stroke
+    if (!country) {
+      svgHC.selectAll("circle")
+        .transition().duration(300)
+        .style("opacity", 1)
+        .attr("stroke-width", 1);
+  
+      svgHC.selectAll("text")
+        .transition().duration(300)
+        .style("opacity", 1);
+  
+      hideSidePanel();
+      return;
+    }
+  
+    // If we do have a country selected:
+    svgHC.selectAll("circle")
+      .transition().duration(300)
+      .style("opacity", d => d.country === country ? 1 : 0.2)
+      .attr("stroke-width", d => d.country === country ? 3 : 1);
+  
+    // Similarly dim text for other countries
+    svgHC.selectAll("text")
+      .transition().duration(300)
+      .style("opacity", d => d.country === country ? 1 : 0.2);
+  
+    // Show or update side panel with extra info
+    showSidePanel(country);
+  }
 
-    const healthyValues = countries.map(c => ({ country: c, value: filteredData.find(d => d.Country === c)["Healthy (%)"] }));
-    const sphValues = countries.map(c => ({ country: c, value: filteredData.find(d => d.Country === c)["SPH"] }));
+  function showSidePanel(country) {
+    // Example: you have a <div id="sidePanel"></div> in HTML
+    // You might fetch more data, or just display a quick summary
+    d3.select("#sidePanel")
+      .style("display", "block")
+      .html(`
+        <h3>${country}</h3>
+        <p>Here are some additional stats or context for ${country}.</p>
+      `);
+  }
+  
+  function hideSidePanel() {
+    d3.select("#sidePanel")
+      .style("display", "none");
+  }
+  
+  
 
-    const leftRect = {
-        xMin: (mainHex[0][0] + leftXMax) / 2,
-        xMax: leftXMax - leftSectionMargin,
-        yMin: topY() + 20,
-        yMax: bottomY() - 20
-    };
+// C) Draw a label for a rectangle region
+function drawRectTitle(rect, label, classPrefix) {
+    // Remove old text
+    svgHC.selectAll("text." + classPrefix).remove();
+  
+    // We split the label by newline, if any
+    const lines = label.split("\n");
+  
+    // For each line in 'lines', we append a separate text element
+    lines.forEach((lineText, i) => {
+      svgHC.append("text")
+        .attr("class", classPrefix)
+        .attr("x", (rect.xMin + rect.xMax) / 2)
+        .attr("y", rect.yMin - 5 + i * 15) // offset each line by ~15px
+        .attr("text-anchor", "middle")
+        .style("font-size", i === 0 ? "14px" : "12px") // slightly smaller for sub-label
+        .style("font-weight", i === 0 ? "bold" : "normal")
+        .text(lineText);
+    });
+  }
+  
 
-    const rightRect = {
-        xMin: rightXMin + rightSectionMargin,
-        xMax: (mainHex[3][0] + rightXMin) / 2,
-        yMin: topY() + 20,
-        yMax: bottomY() - 20
-    };
+/* ---------------------------------------------------
+   4) DATA AGGREGATION FOR EACH METRIC
+---------------------------------------------------- */
 
-    const minRadius = 23, maxRadius = 40;
-    const healthyScale = d3.scaleLinear()
-        .domain(d3.extent(healthyValues, d => d.value))
-        .range([minRadius, maxRadius]);
-
-    const sphScale = d3.scaleLinear()
-        .domain(d3.extent(sphValues, d => d.value))
-        .range([minRadius, maxRadius]);
-
-    healthyValues.sort((a, b) => b.value - a.value);
-    sphValues.sort((a, b) => b.value - a.value);
-
-    const leftCircles = placeCirclesInRect(healthyValues, healthyScale, leftRect, "left");
-    const rightCircles = placeCirclesInRect(sphValues, sphScale, rightRect, "right");
-
-    drawCircles([...leftCircles, ...rightCircles]);
-
-    // Call for each hex with correct dataType
-    addWedgeCirclesToHex(upperLeftHex, year, "UL", "frequency_exercise");
-    addWedgeCirclesToHex(upperRightHex, year, "UR", "fruits");
-    addWedgeCirclesToHex(lowerLeftHex, year, "LL", "duration_exercise");
-    addWedgeCirclesToHex(lowerRightHex, year, "LR", "vegetables");
+// Return array of { country, value } sorted desc by value
+function getBmiData(year) {
+  const filtered = healthDataAll.filter(d => d.Year === year && d.Sex === "Total");
+  return countries.map(c => ({
+    country: c,
+    value: filtered.find(d => d.Country === c)["Healthy (%)"]
+  })).sort((a, b) => b.value - a.value);
 }
 
+function getSphData(year) {
+  const filtered = healthDataAll.filter(d => d.Year === year && d.Sex === "Total");
+  return countries.map(c => ({
+    country: c,
+    value: filtered.find(d => d.Country === c)["SPH"]
+  })).sort((a, b) => b.value - a.value);
+}
+
+function getExerciseFrequencyData(year) {
+  // freq = Exercise Frequency (Regularly) + (Some Regularity)
+  const filtered = sportsDataAll.filter(d => d.Year === year);
+  return countries.map(c => {
+    const row = filtered.find(d => d.Country === c);
+    if (!row) return { country: c, value: 0 };
+    const val = (+row["Exercise Frequency (Regularly)"] || 0) + (+row["Exercise Frequency (Some Regularity)"] || 0);
+    return { country: c, value: val };
+  }).sort((a, b) => b.value - a.value);
+}
+
+function getVigorousActivityData(year) {
+  // 100 - Vigorous Activity (Never)
+  const filtered = sportsDataAll.filter(d => d.Year === year);
+  return countries.map(c => {
+    const row = filtered.find(d => d.Country === c);
+    if (!row) return { country: c, value: 0 };
+    const val = 100 - (+row["Vigorous Activity (Never)"] || 0);
+    return { country: c, value: val };
+  }).sort((a, b) => b.value - a.value);
+}
+
+function getFruitData(year) {
+  const filtered = healthDataAll.filter(d => d.Year === year && d.Sex === "Total");
+  return countries.map(c => ({
+    country: c,
+    value: filtered.find(d => d.Country === c)["Fruit Consumption (%)"] || 0
+  })).sort((a, b) => b.value - a.value);
+}
+
+function getVegetableData(year) {
+  const filtered = healthDataAll.filter(d => d.Year === year && d.Sex === "Total");
+  return countries.map(c => ({
+    country: c,
+    value: filtered.find(d => d.Country === c)["Vegetable Consumption (%)"] || 0
+  })).sort((a, b) => b.value - a.value);
+}
+
+/* ---------------------------------------------------
+   5) UPDATE FUNCTION
+---------------------------------------------------- */
+function updateAll(year) {
+  // 1. BMI in center-left
+  let bmiValues = getBmiData(year);
+  // 2. SPH in center-right
+  let sphValues = getSphData(year);
+  // 3. top-left: Exercising Frequently
+  let freqValues = getExerciseFrequencyData(year);
+  // 4. top-right: Eating Fruits
+  let fruitValues = getFruitData(year);
+  // 5. bottom-left: Exercising Vigorously
+  let vigorValues = getVigorousActivityData(year);
+  // 6. bottom-right: Eating Vegetables
+  let vegValues = getVegetableData(year);
+
+  // If any dataset is empty or undefined, just skip
+  if (!bmiValues.length || !sphValues.length) return;
+
+  // Create scales for each variable
+  const minR = 15, maxR = 35;
+
+  const bmiExtent = d3.extent(bmiValues, d => d.value);
+  const bmiScale = d3.scaleLinear().domain(bmiExtent).range([minR, maxR]);
+
+  const sphExtent = d3.extent(sphValues, d => d.value);
+  const sphScale = d3.scaleLinear().domain(sphExtent).range([minR, maxR]);
+
+  const freqExtent = d3.extent(freqValues, d => d.value);
+  const freqScale = d3.scaleLinear().domain(freqExtent).range([minR, maxR]);
+
+  const vigorExtent = d3.extent(vigorValues, d => d.value);
+  const vigorScale = d3.scaleLinear().domain(vigorExtent).range([minR, maxR]);
+
+  const fruitExtent = d3.extent(fruitValues, d => d.value);
+  const fruitScale = d3.scaleLinear().domain(fruitExtent).range([minR, maxR]);
+
+  const vegExtent = d3.extent(vegValues, d => d.value);
+  const vegScale = d3.scaleLinear().domain(vegExtent).range([minR, maxR]);
+
+  // 2) Place circles vertically in each rectangle
+  // Note we pass fontSize=12 to match the text
+  const bmiCircles = placeCirclesVertically(bmiValues, bmiScale, centerBMI, 12);
+  drawCircles(bmiCircles, "bmi-circles");
+
+  const sphCircles = placeCirclesVertically(sphValues, sphScale, centerSPH, 12);
+  drawCircles(sphCircles, "sph-circles");
+
+  const freqCircles = placeCirclesVertically(freqValues, freqScale, topLeftRect, 12);
+  drawCircles(freqCircles, "freq-circles");
+
+  const fruitCircles = placeCirclesVertically(fruitValues, fruitScale, topRightRect, 12);
+  drawCircles(fruitCircles, "fruit-circles");
+
+  const vigorCircles = placeCirclesVertically(vigorValues, vigorScale, bottomLeftRect, 12);
+  drawCircles(vigorCircles, "vigor-circles");
+
+  const vegCircles = placeCirclesVertically(vegValues, vegScale, bottomRightRect, 12);
+  drawCircles(vegCircles, "veg-circles");
+
+  drawRectTitle(centerBMI, "Normal BMI (%)", "bmi-title");
+drawRectTitle(centerSPH, "Good SPH (%)", "sph-title");
+drawRectTitle(topLeftRect, "Frequent Exercise (%)\n(Students Exercising Most Days)", "freq-title");
+drawRectTitle(topRightRect, "Fruit Consumption (%)\n(Regular Fruit Eaters)", "fruit-title");
+drawRectTitle(bottomLeftRect, "Vigorous Exercise (%)\n(Students Who Do High-Intensity Workouts)", "vigor-title");
+drawRectTitle(bottomRightRect, "Vegetable Consumption (%)\n(Regular Veggie Eaters)", "veg-title");
+
+}
+
+/* ---------------------------------------------------
+   6) YEAR SLIDER
+---------------------------------------------------- */
 d3.select("#yearSlider").on("input", function () {
-    const selectedYear = this.value;
-    d3.select("#yearDisplay").text(selectedYear);
-    updateCircles(selectedYear);
+  const selectedYear = this.value;
+  d3.select("#yearDisplay").text(selectedYear);
+  updateAll(selectedYear);
 });
