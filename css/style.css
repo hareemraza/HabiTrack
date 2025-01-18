@@ -6,16 +6,24 @@ body {
   justify-content: start;
   margin: 0;
   padding: 20px;
-  background-color: rgb(249, 234, 206);
+  background-color: rgb(238, 232, 222);
   color: #333;
 }
 
 h1 {
   text-align: center;
+  font-size: 3rem;
+  color: #222; 
+  font-weight: 700; 
+  margin-bottom: 10px;
+}
+
+h2 {
+  text-align: center;
   font-size: 2rem;
   color: #222; 
   font-weight: 700; 
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .subtitle {
@@ -23,7 +31,7 @@ h1 {
   font-family: 'Roboto', sans-serif;
   font-size: 19px; 
   font-weight: 400; 
-  color: #4a4a4a; 
+  color: #393838; 
   margin-top: 10px;
   margin-bottom: 20px; 
 }

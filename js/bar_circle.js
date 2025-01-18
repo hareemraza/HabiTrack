@@ -1,7 +1,5 @@
 $(document).ready(function () {
-    let allData = []; // Will store the entire CSV data
-
-    // Load the CSV data once at the start
+    let allData = []; 
     d3.csv('data/sports_data.csv').then(function (data) {
         allData = data;
 
@@ -69,12 +67,6 @@ $(document).ready(function () {
         var innerradius = parseInt(chartElement.dataset.ir, 10);
         var country = chartElement.dataset.country;
 
-        var colors = {
-            "cow": '#EDB458',
-            "ewe": '#E8871E',
-            "goat": '#C8963E',
-            "plant": '#697e3e'
-        };
         var source_name = d3.select("body").append("div")
             .attr("class", "source_name")
             .style("opacity", 0);
@@ -143,9 +135,12 @@ $(document).ready(function () {
             .attr('id', function (d) { return d.data.code; })
 
         var colors = {
-            "France": ["#85C1E9", "#3498DB", "#21618C"], // Shades of blue
-            "Italy": ["#A9DFBF", "#58D68D", "#1E8449"], // Shades of green
-            "Netherlands": ["#F9E79F", "#F4D03F", "#D4AC0D"] // Shades of yellow
+            // "France": ["#85C1E9", "#3498DB", "#21618C"], // Shades of blue
+            // "Italy": ["#A9DFBF", "#58D68D", "#1E8449"], // Shades of green
+            // "Netherlands": ["#F9E79F", "#F4D03F", "#D4AC0D"] // Shades of yellow
+            "France": ["#85C1E9", "#0070C0", "#1B4F72"], // Light to dark shades of blue
+            "Italy": ["#A9DFBF", "#008000", "#145A32"], // Light to dark shades of green
+            "Netherlands": ["#F9E79F", "#FFA500", "#D68910"] // Light to dark shades of orange-yellow
         };
 
         // Determine the colors based on the country
@@ -268,46 +263,10 @@ $(document).ready(function () {
                 //console.log(sources[d]) //debug icons 
 
             });
-        // .transition()
-        // .duration(300);
 
         labels.transition().duration(300);
 
         labels.exit().remove();
-        //__labels
-        //__ unit explaination 
-        htmlContent = `<div class="top-right-content_html" style="text-align: center; margin-bottom:10px;"><span style="color: gray;">What are CO2 Equivalents (CO2)?</span></div>`
-        dets = `<div class="top-right-content_dets" style="text-align: center; margin-bottom:10px;"><span style="color: black;">Emissions of different gases emitted are converted to CO2 equivalent based on 'Global Warming Potential' (GWP)</span></div>`
-        dets2 = `<div class="top-right-content_dets" style="text-align: center; margin-bottom:10px;">
-        <span id="popup-close-btn" onclick="closeInfoPopup()">×</span>
-        <span style="color: black;">
-            This helps in measuring of warming that is contributed by each gas to the greenhouse effect.
-            <br> 
-            <table>
-                <tr>
-                    <th>Gas type (1kg emissions)</th>
-                    <th>CO2 Equivalents</th>
-                </tr>
-                <tr>
-                    <td>CO2</td>
-                    <td>1kg</td>
-                </tr>
-                <tr>
-                    <td>N2O (Nitrous Oxide)</td>
-                    <td>298kg</td>
-                </tr>
-                <tr>
-                    <td>CH4 (Methane)</td>
-                    <td>25kg</td>
-                </tr>
-            </table>
-        </span>
-    </div>`
-        source = `<div class="top-right-content_dets" style="text-align: center; margin-bottom:10px;">Source: <a href="https://www.cbs.nl/en-gb/news/2019/37/greenhouse-gas-emissions-down/co2-equivalents" target="_blank">Statistics Netherlands</a></div>`
-
-        //__ calaculation explaination
-        dets_calc = `<div class="top-right-content_dets" style="text-align: center; margin-bottom:10px;"><span style="color: black;">Production in Kg * Average Kg CO2 eq</span></div>`
-
     }
 });
 
