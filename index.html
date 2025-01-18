@@ -23,13 +23,65 @@
     <p class="subtitle" style="font-size: 22px;">
       An Analysis of Health Habits and their Impact on Student Well-Being in France, Italy, and the Netherlands to Guide BDMA Students' Specialization Choices   </p>
 
-   <h2>Overall Health Profiles of Countries</h2>
-   <p class="subtitle">
-     How does Normal, Overweight and Obese BMI Vary across Countries?
-   </p>
-  <!-- Dropdown for Year Selection -->
-  <!-- Container for Grouped Bar Chart -->
-  <div id="chart-container" style="width: 100%; height: auto;"></div>
+      <h2>Overall Health Profiles of Countries</h2>
+      <p class="subtitle">
+        How does Normal, Overweight and Obese BMI Vary across Countries?
+      </p>
+      
+<!-- Tabs for switching between charts -->
+<div class="tabs">
+  <button class="tab-button active" data-tab="countries-chart">By Countries</button>
+  <button class="tab-button" data-tab="categories-chart">By Health</button>
+</div>
+
+<!-- Containers for each chart -->
+<div id="countries-chart" class="tab-content active">
+  <div id="chart-container-countries" style="width: 100%; height: auto;"></div>
+</div>
+<div id="categories-chart" class="tab-content">
+  <div id="chart-container-categories" style="width: 100%; height: auto;"></div>
+</div>
+
+<!-- CSS for tabs -->
+<style>
+  .tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd; /* Adds a subtle underline for the tabs container */
+  }
+
+  .tab-button {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 15px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: #555;
+    transition: color 0.3s ease, border-bottom 0.3s ease;
+  }
+
+  .tab-button:hover {
+    color: #222; /* Slightly darker on hover */
+  }
+
+  .tab-button.active {
+    color: #000; /* Darker, bold look */
+    font-weight: bold;
+    border-bottom: 3px solid #000; /* Underline for active tab */
+  }
+
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+</style>
+      
 
 
   <h2>Yearly Trends in Students' Health Outcomes, Exercise, and Dietary Habits</h2>
