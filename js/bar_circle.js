@@ -302,7 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
 
     function createGroupedBarChartCategory(data, containerId) {
-        const margin = { top: 50, right: 30, bottom: 70, left: 60 };
+        const margin = { top: 50, right: 30, bottom: 50, left: 60 };
         const width = 1000 - margin.left - margin.right;
         const height = 500 - margin.top - margin.bottom;
     
