@@ -19,7 +19,7 @@ svg
   .style("stroke", "gray")
   .style("stroke-dasharray", "6");
 
-// Scales for axes  
+// Scales for axes
 const xScaleHealthy = d3.scaleLinear().range([0, width / 2 - 20]);
 const xScaleSPH = d3.scaleLinear().range([width / 2 + 20, width]);
 const yScale = d3.scaleLinear().range([height, 0]);
@@ -436,7 +436,7 @@ Promise.all([
       .attr("x2", "100%").attr("y2", "0%");
   });
 
-  updateScales(); 
+  updateScales();
 
   countriesForYearLegend.forEach((country, i) => {
     const gradId = `year-gradient-${country.replace(/\s+/g, '-')}`;
@@ -527,6 +527,66 @@ function updateScales() {
   });
 }
 
+// Updated drawTrendlines function to allow separate lines for each gender in Health data
+function drawTrendlines(filteredData, xScale, yScale, isLeftPanel, xAccessor, yAccessor, dataType) {
+  if (!filteredData || filteredData.length === 0) return;
+
+  // For health data: group by (Country, Sex). For sports data: group by Country only.
+  if (dataType === "health") {
+    const grouped = d3.group(filteredData, d => d.Country, d => d.Sex);
+    grouped.forEach((sexMap, country) => {
+      sexMap.forEach((data, sex) => {
+        const { slope, intercept } = calculateTrendline(data, xAccessor, yAccessor);
+        const xExtent = d3.extent(data, xAccessor);
+        const trendlinePoints = [
+          { x: xExtent[0], y: slope * xExtent[0] + intercept },
+          { x: xExtent[1], y: slope * xExtent[1] + intercept }
+        ];
+
+        svg.append("path")
+          .datum(trendlinePoints)
+          .attr("class", isLeftPanel ? "trendline-healthy" : "trendline-sph")
+          .attr("data-country", country)
+          .attr("data-sex", sex)
+          .attr("fill", "none")
+          .attr("stroke", colorScale(country))
+          .attr("stroke-width", 1)
+          .attr("stroke-dasharray", "3")
+          .attr("d", d3.line()
+            .x(d => xScale(d.x))
+            .y(d => yScale(d.y))
+          )
+          .style("display", showTrendlines ? null : "none");
+      });
+    });
+  } else {
+    // Sports data remains as a single trendline per country
+    const countries = d3.group(filteredData, d => d.Country);
+    countries.forEach((data, country) => {
+      const { slope, intercept } = calculateTrendline(data, xAccessor, yAccessor);
+      const xExtent = d3.extent(data, xAccessor);
+      const trendlinePoints = [
+        { x: xExtent[0], y: slope * xExtent[0] + intercept },
+        { x: xExtent[1], y: slope * xExtent[1] + intercept }
+      ];
+
+      svg.append("path")
+        .datum(trendlinePoints)
+        .attr("class", isLeftPanel ? "trendline-healthy" : "trendline-sph")
+        .attr("data-country", country)
+        .attr("fill", "none")
+        .attr("stroke", colorScale(country))
+        .attr("stroke-width", 1)
+        .attr("stroke-dasharray", "3")
+        .attr("d", d3.line()
+          .x(d => xScale(d.x))
+          .y(d => yScale(d.y))
+        )
+        .style("display", showTrendlines ? null : "none");
+    });
+  }
+}
+
 function calculateTrendline(data, xAccessor, yAccessor) {
   const xValues = data.map(xAccessor);
   const yValues = data.map(yAccessor);
@@ -538,31 +598,6 @@ function calculateTrendline(data, xAccessor, yAccessor) {
   const slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
   const intercept = (sumY - slope * sumX) / n;
   return { slope, intercept };
-}
-
-function drawTrendlines(filteredData, xScale, yScale, isLeftPanel, xAccessor, yAccessor) {
-  const countries = d3.group(filteredData, d => d.Country);
-  countries.forEach((data, country) => {
-    const { slope, intercept } = calculateTrendline(data, xAccessor, yAccessor);
-    const xExtent = d3.extent(data, xAccessor);
-    const trendlinePoints = [
-      { x: xExtent[0], y: slope * xExtent[0] + intercept },
-      { x: xExtent[1], y: slope * xExtent[1] + intercept }
-    ];
-    svg.append("path")
-      .datum(trendlinePoints)
-      .attr("class", isLeftPanel ? "trendline-healthy" : "trendline-sph")
-      .attr("data-country", country)
-      .attr("fill", "none")
-      .attr("stroke", colorScale(country))
-      .attr("stroke-width", 1)
-      .attr("stroke-dasharray", "3")
-      .attr("d", d3.line()
-        .x(d => xScale(d.x))
-        .y(d => yScale(d.y))
-      )
-      .style("display", showTrendlines ? null : "none");
-  });
 }
 
 function highlightCountry(country) {
@@ -597,9 +632,15 @@ function updatePlot(yAxisVariable) {
   const displayYAxisLabel = displayLabelMap[yAxisVariable] || yAxisVariable;
   yAxisLabel.text(displayYAxisLabel);
 
-  let isHealthData = categories["Health Metrics"].includes(Object.keys(columnNameMap).find(key => columnNameMap[key] === yAxisVariable)) || 
-                     categories["Dietary Habits"].includes(Object.keys(columnNameMap).find(key => columnNameMap[key] === yAxisVariable));
-  let isSportsData = categories["Physical Habits"].includes(Object.keys(columnNameMap).find(key => columnNameMap[key] === yAxisVariable));
+  let isHealthData = categories["Health Metrics"].includes(
+    Object.keys(columnNameMap).find(key => columnNameMap[key] === yAxisVariable)
+  ) || categories["Dietary Habits"].includes(
+    Object.keys(columnNameMap).find(key => columnNameMap[key] === yAxisVariable)
+  );
+
+  let isSportsData = categories["Physical Habits"].includes(
+    Object.keys(columnNameMap).find(key => columnNameMap[key] === yAxisVariable)
+  );
 
   let filteredData;
   if (isHealthData) {
@@ -712,9 +753,26 @@ function updatePlot(yAxisVariable) {
       .call(drawPoint, d => xScaleSPH(d.SPH), yAccessor, false, "sports");
   }
 
+  // Pass dataType to drawTrendlines to separate by gender in health data, single line in sports.
   if (isHealthData || isSportsData) {
-    drawTrendlines(filteredData, xScaleHealthy, yScale, true, d => d["Healthy (%)"], yAccessor);
-    drawTrendlines(filteredData, xScaleSPH, yScale, false, d => d.SPH, yAccessor);
+    drawTrendlines(
+      filteredData,
+      xScaleHealthy,
+      yScale,
+      true,
+      d => d["Healthy (%)"],
+      yAccessor,
+      isHealthData ? "health" : "sports"
+    );
+    drawTrendlines(
+      filteredData,
+      xScaleSPH,
+      yScale,
+      false,
+      d => d.SPH,
+      yAccessor,
+      isHealthData ? "health" : "sports"
+    );
   }
 
   if (isHealthData) {
