@@ -166,7 +166,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function createGroupedBarChart(data, containerId, mode) {
-        const margin = { top: 50, right: 30, bottom: 100, left: 60 };
+        const margin = { top: 50, right: 30, bottom: 70, left: 60 };
+
         const width = 1000 - margin.left - margin.right;
         const height = 500 - margin.top - margin.bottom;
     
@@ -301,7 +302,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
 
     function createGroupedBarChartCategory(data, containerId) {
-        const margin = { top: 50, right: 30, bottom: 100, left: 60 };
+        const margin = { top: 50, right: 30, bottom: 70, left: 60 };
         const width = 1000 - margin.left - margin.right;
         const height = 500 - margin.top - margin.bottom;
     
