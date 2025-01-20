@@ -15,6 +15,7 @@
   <!-- First Plot (Honeycomb) -->
   <script src="js/honeycomb.js" defer></script>
   <script src="js/bar_circle.js" defer></script>
+  <script src="js/rank.js" defer></script>
 </head>
 
 <body>
@@ -31,7 +32,7 @@
 <!-- Tabs for switching between charts -->
 <div class="tabs">
   <button class="tab-button active" data-tab="countries-chart">By Countries</button>
-  <button class="tab-button" data-tab="categories-chart">By Health</button>
+  <button class="tab-button" data-tab="categories-chart">By Health Levels</button>
 </div>
 
 <!-- Containers for each chart -->
@@ -141,23 +142,19 @@
       Which Country Ranks the Best in Various Diet and Physical Health Factors??
     </p>
   
-    <!-- Controls for the third plot -->
-    <div id="controls-rank">
-      <label for="y-axis-select-rank">Select Ranking Factor:</label>
-      <select id="y-axis-select-rank">
-        <!-- You can adjust/add more options if desired -->
-        <option value="Fruit Consumption (%)" selected>Daily Fruit Consumption</option>
-        <option value="Vegetable Consumption (%)">Daily Vegetable Consumption</option>
-        <option value="SPH">Self-Perceived Health (SPH)</option>
-      </select>
+    <div class="tabs">
+      <button class="tab-button active" data-tab="dietary-factors">Dietary Factors</button>
+      <button class="tab-button" data-tab="health-factors">Physical Activity</button>
     </div>
   
-    <!-- Container for the third plot -->
-    <div id="rank-chart">
-      <script src="js/rank.js" defer></script>
-  
+    <!-- Containers for each chart -->
+    <div id="dietary-factors" class="tab-content active">
+      <div id="dietary-chart" style="width: 100%; height: auto;"></div>
     </div>
-  
+    <div id="health-factors" class="tab-content">
+      <div id="health-chart" style="width: 100%; height: auto;"></div>
+    </div>
+
 </body>
 
 </html>

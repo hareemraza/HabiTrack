@@ -1,67 +1,69 @@
-function drawLeaderboard(data, yAxisVariable) {
-  // Aggregate and compute averages for each country
-  const countries = ["France", "Italy", "Netherlands"];
-  const countryData = countries.map(country => {
-    const countryRows = data.filter(d => d.Country === country && d.Sex === "Total");
-    const averageValue =
-      countryRows.reduce((sum, row) => sum + +row[yAxisVariable], 0) / countryRows.length;
-    return { country, value: averageValue };
-  });
+function drawLeaderboard(containerId, data, yAxisVariable = null) {
+  // Clear previous SVG content completely
+  d3.select(`#${containerId}`).html("");
 
-  // Sort countries by average value in descending order
+  let countryData;
+  if (yAxisVariable) {
+    // Compute averages from actual data if yAxisVariable is provided
+    const countries = ["France", "Italy", "Netherlands"];
+    countryData = countries.map(country => {
+      const countryRows = data.filter(d => d.Country === country && d.Sex === "Total");
+      const averageValue =
+        countryRows.reduce((sum, row) => sum + +row[yAxisVariable], 0) / countryRows.length;
+      return { country, value: averageValue };
+    });
+  } else {
+    // Use hardcoded data directly
+    countryData = data;
+  }
+
+  // Sort countries by value in descending order
   const sortedData = countryData.sort((a, b) => b.value - a.value);
 
-  // Clear previous SVG content
-  d3.select("#rank-chart").select("svg").remove();
-
-  // Create SVG container with increased size
-  const svg = d3.select("#rank-chart").append("svg")
+  // Create SVG container
+  const svg = d3.select(`#${containerId}`).append("svg")
     .attr("viewBox", "0 0 800 600")
     .attr("width", 800)
     .attr("height", 600)
     .style("margin", "auto")
     .style("display", "block");
 
-  // Define gradients for bars
-  const gradients = {
-    France: ["#4682B4", "#5A9BD4"],
-    Italy: ["#32CD32", "#66FF66"],
-    Netherlands: ["#FF8C00", "#FFA54D"]
-  };
+  // Define gradients for bars (only once per container)
+  if (!document.getElementById(`gradient-defs-${containerId}`)) {
+    const defs = svg.append("defs").attr("id", `gradient-defs-${containerId}`);
+    const gradients = {
+      France: ["#4682B4", "#5A9BD4"],
+      Italy: ["#32CD32", "#66FF66"],
+      Netherlands: ["#FF8C00", "#FFA54D"]
+    };
+    Object.keys(gradients).forEach(country => {
+      const gradient = defs.append("linearGradient")
+        .attr("id", `gradient-${country}-${containerId}`)
+        .attr("x1", "0%")
+        .attr("y1", "0%")
+        .attr("x2", "0%")
+        .attr("y2", "100%");
+      gradient.append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", gradients[country][0]);
+      gradient.append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", gradients[country][1]);
+    });
+  }
 
-  const defs = svg.append("defs");
-  countries.forEach(country => {
-    const gradient = defs.append("linearGradient")
-      .attr("id", `gradient-${country}`)
-      .attr("x1", "0%")
-      .attr("y1", "0%")
-      .attr("x2", "0%")
-      .attr("y2", "100%");
-    gradient.append("stop")
-      .attr("offset", "0%")
-      .attr("stop-color", gradients[country][0]);
-    gradient.append("stop")
-      .attr("offset", "100%")
-      .attr("stop-color", gradients[country][1]);
-  });
-  
-const barWidth = 200; // Increased bar width
-const barHeights = [320, 240, 160]; // Proper heights for podium rank
-const xPositions = [320, 70, 555]; // Adjusted x-positions for better spacing
-const yPositions = [110, 190, 270]; // Adjusted y-positions for podium effect
-
-
-  // Flags for countries
+  const barWidth = 200;
+  const barHeights = [320, 240, 160];
+  const xPositions = [320, 70, 555];
+  const yPositions = [110, 190, 270];
   const countryFlags = {
     France: "https://upload.wikimedia.org/wikipedia/en/c/c3/Flag_of_France.svg",
     Italy: "https://upload.wikimedia.org/wikipedia/en/0/03/Flag_of_Italy.svg",
     Netherlands: "https://upload.wikimedia.org/wikipedia/commons/2/20/Flag_of_the_Netherlands.svg"
   };
-
-  // Position labels (1st, 2nd, 3rd)
   const positionLabels = ["1st", "2nd", "3rd"];
 
-  // Tooltip for hover
+  // Tooltip for hover functionality
   const tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("position", "absolute")
@@ -74,22 +76,27 @@ const yPositions = [110, 190, 270]; // Adjusted y-positions for podium effect
     .style("font-family", "Arial")
     .style("font-size", "14px");
 
-  // Create podium bars with gradient and updated styles
+  const rankings = {
+    France: { bmi: "1st", sph: "2nd" },
+    Italy: { bmi: "2nd", sph: "3rd" },
+    Netherlands: { bmi: "3rd", sph: "1st" },
+  };
+
+  // Draw bars, flags, and labels
   sortedData.forEach((d, i) => {
-    // Draw bars with gradient fill
     svg.append("rect")
       .attr("x", xPositions[i])
       .attr("y", yPositions[i])
       .attr("width", barWidth)
       .attr("height", barHeights[i])
-      .attr("fill", `url(#gradient-${d.country})`)
-      .attr("rx", 10) // Rounded corners
+      .attr("fill", `url(#gradient-${d.country}-${containerId})`)
+      .attr("rx", 10)
       .on("mouseover", (event) => {
         tooltip.style("display", "block")
           .html(`
-            <strong>Country:</strong> ${d.country}<br>
-            <strong>Health Factor:</strong> ${yAxisVariable}<br>
-            <strong>Percentage of Students:</strong> ${d.value.toFixed(1)}%
+            <strong>${d.country}</strong><br>
+            Ranked <strong>${rankings[d.country].bmi}</strong> for students with the healthiest BMI levels.<br>
+            Ranked <strong>${rankings[d.country].sph}</strong> for students with the best perception of their health.
           `);
       })
       .on("mousemove", (event) => {
@@ -100,7 +107,6 @@ const yPositions = [110, 190, 270]; // Adjusted y-positions for podium effect
         tooltip.style("display", "none");
       });
 
-    // Add flag images on top of bars
     svg.append("image")
       .attr("href", countryFlags[d.country])
       .attr("x", xPositions[i] + barWidth / 2 - 20)
@@ -108,7 +114,6 @@ const yPositions = [110, 190, 270]; // Adjusted y-positions for podium effect
       .attr("width", 40)
       .attr("height", 30);
 
-    // Add position labels inside bars
     svg.append("text")
       .attr("x", xPositions[i] + barWidth / 2)
       .attr("y", yPositions[i] + barHeights[i] / 2)
@@ -118,7 +123,6 @@ const yPositions = [110, 190, 270]; // Adjusted y-positions for podium effect
       .style("fill", "white")
       .text(positionLabels[i]);
 
-    // Add country labels below bars
     svg.append("text")
       .attr("x", xPositions[i] + barWidth / 2)
       .attr("y", yPositions[i] + barHeights[i] + 50)
@@ -130,26 +134,45 @@ const yPositions = [110, 190, 270]; // Adjusted y-positions for podium effect
   });
 }
 
-// Dropdown change handler
-function onDropdownChange(yAxisVariable, healthData) {
-  drawLeaderboard(healthData, yAxisVariable);
+function initializeTabs(data) {
+  const dietaryTab = document.querySelector(".tab-button[data-tab='dietary-factors']");
+  const healthTab = document.querySelector(".tab-button[data-tab='health-factors']");
+
+  dietaryTab.addEventListener("click", () => {
+    document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
+    document.querySelector("#dietary-factors").classList.add("active");
+    document.querySelectorAll(".tab-button").forEach(el => el.classList.remove("active"));
+    dietaryTab.classList.add("active");
+
+    // Draw leaderboard using actual data for Dietary Factors
+    drawLeaderboard("dietary-chart", data, "Fruit Consumption (%)");
+  });
+
+  healthTab.addEventListener("click", () => {
+    document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
+    document.querySelector("#health-factors").classList.add("active");
+    document.querySelectorAll(".tab-button").forEach(el => el.classList.remove("active"));
+    healthTab.classList.add("active");
+
+    // Draw leaderboard using hardcoded data for Health Factors
+    const hardcodedHealthData = [
+      { country: "Netherlands", value: 90 }, // 1st
+      { country: "France", value: 80 }, // 2nd
+      { country: "Italy", value: 70 }, // 3rd
+    ];
+    drawLeaderboard("health-chart", hardcodedHealthData);
+  });
 }
 
-// Initialize chart
+// Initialize chart and tabs
 Promise.all([d3.csv("data/health_data.csv")]).then(([healthData]) => {
-  // Parse numeric fields
   healthData.forEach(d => {
     d["Fruit Consumption (%)"] = +d["Fruit Consumption (%)"];
     d["Vegetable Consumption (%)"] = +d["Vegetable Consumption (%)"];
     d["SPH"] = +d["SPH"];
   });
 
-  // Initial plot with default dropdown value
-  const defaultVariable = "Fruit Consumption (%)";
-  drawLeaderboard(healthData, defaultVariable);
-
-  // Update chart on dropdown change
-  d3.select("#y-axis-select-rank").on("change", function () {
-    onDropdownChange(this.value, healthData);
-  });
+  // Initialize tabs and default rendering
+  initializeTabs(healthData);
+  drawLeaderboard("dietary-chart", healthData, "Fruit Consumption (%)"); // Default chart
 });
