@@ -5,37 +5,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>HabiTrack</title>
-  <!-- Fonts & Styles -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Poppins:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css"/>
 
-  <!-- D3 Library -->
   <script src="https://d3js.org/d3.v7.min.js" defer></script>
 
-  <!-- First Plot (Honeycomb) -->
   <script src="js/honeycomb.js" defer></script>
-  <script src="js/bar_circle.js" defer></script>
+  <script src="js/barchart.js" defer></script>
   <script src="js/rank.js" defer></script>
 </head>
 
 <body>
-  <!-- 1) FIRST PLOT: Honeycomb Visualization -->
    <h1>HabiTrack</h1>
-    <p class="subtitle" style="font-size: 22px;">
-      An Analysis of Health Habits and their Impact on Student Well-Being in France, Italy, and the Netherlands to Guide BDMA Students' Specialization Choices   </p>
+    <p class="subtitle" style="font-size: 1.4rem;">
+      Confused about your BDMA specialization? <br>
+      Let's explore how students in France, Italy, and the Netherlands are balancing health and well-being.
+      <br> Which country leads the way? 🌍 Let’s find out together!</p>
 
-      <h2>Overall Health Profiles of Countries</h2>
+      <h2>How Do Student Health Profiles Compare Across Countries?</h2>
       <p class="subtitle">
-        How does Normal, Overweight and Obese BMI Vary across Countries?
-      </p>
+        Let's see if students from one country stand out as the healthiest.</p>
       
-<!-- Tabs for switching between charts -->
 <div class="tabs">
   <button class="tab-button active" data-tab="countries-chart">By Countries</button>
   <button class="tab-button" data-tab="categories-chart">By Health Levels</button>
 </div>
 
-<!-- Containers for each chart -->
 <div id="countries-chart" class="tab-content active">
   <div id="chart-container-countries" style="width: 100%; height: auto;"></div>
 </div>
@@ -43,19 +38,20 @@
   <div id="chart-container-categories" style="width: 100%; height: auto;"></div>
 </div>
 
+
 <!-- CSS for tabs -->
 <style>
   .tabs {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
-    border-bottom: 2px solid #ddd; /* Adds a subtle underline for the tabs container */
+    border-bottom: 2px solid #ddd; 
   }
 
   .tab-button {
     font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 18px;
+    font-weight: 400;
     padding: 10px 15px;
     cursor: pointer;
     background: none;
@@ -65,13 +61,13 @@
   }
 
   .tab-button:hover {
-    color: #222; /* Slightly darker on hover */
+    color: #222;
   }
 
   .tab-button.active {
-    color: #000; /* Darker, bold look */
-    font-weight: bold;
-    border-bottom: 3px solid #000; /* Underline for active tab */
+    color: #000; 
+    font-weight: 500;
+    border-bottom: 3px solid #000; 
   }
 
   .tab-content {
@@ -84,10 +80,9 @@
 </style>
       
 
-
-  <h2>Which Country's Students Lead the Way in Health—And Why?</h2>
+  <h2 style="margin-top: 60px;">Which Country's Students Lead in Different Health Categories?</h2>
   <p class="subtitle">
-    Compare BMI, Self-Perceived Health, and Lifestyle Habits Across Countries—and Spot the Correlations.
+    Compare health trends and habits over the years and uncover what sets each country apart!
   </p>
 
   <div id="honeycomb"></div>
@@ -115,46 +110,54 @@
     </div>
   </div>
 
-  <!-- 2) SECOND PLOT: Correlation Scatterplot -->
-  <h2>Relationship between Students' Dietary and Physical Habits and their Actual and Self-Perceived Health (SPH)</h2>
+  <style>
+    .legend {
+      margin-bottom: 60px; 
+    }
+  </style>
+  
+  <h2>Do Students' Actual and Self-Perceived Health Tell the Same Story?</h2>
   <p class="subtitle">
-    Do Students' Health Habits Correlate Differently with BMI and SPH Across Countries?
-  </p>
-
-  <!-- Controls for the second plot -->
+    Let’s see if students’ habits impact their actual (BMI) and self-perceived health (SPH) in the same way. Across countries? Across genders? </p>
   <div id="controls">
-    <label for="y-axis-select">Select Health Factor:</label>
+    <label for="y-axis-select" class="text" style="font-size: 1.2rem; color: black;">Select Health Factor:</label>
     <select id="y-axis-select">
-      <!-- Populated by script.js -->
       <option value="" disabled selected></option>
     </select>
   </div>
-
-  <!-- Container for the second plot -->
   <div id="chart"></div>
 
-  <!-- Scripts (in order) -->
-  <script src="js/script.js" defer></script>
+  <script src="js/scatterplot.js" defer></script>
 
-    <!-- 3) THIRD PLOT: Ranking (Podium) -->
-    <h2>Ranking Countries by Health Factor</h2>
+    <h2>Who Tops the Health Charts?</h2>
     <p class="subtitle">
-      Which Country Ranks the Best in Various Diet and Physical Health Factors??
+      Let’s take a quick look at the country rankings in our summary leaderboards for dietary and physical factors.
     </p>
   
     <div class="tabs">
       <button class="tab-button active" data-tab="dietary-factors">Dietary Factors</button>
       <button class="tab-button" data-tab="health-factors">Physical Activity</button>
     </div>
-  
-    <!-- Containers for each chart -->
-    <div id="dietary-factors" class="tab-content active">
+      <div id="dietary-factors" class="tab-content active">
       <div id="dietary-chart" style="width: 100%; height: auto;"></div>
     </div>
     <div id="health-factors" class="tab-content">
       <div id="health-chart" style="width: 100%; height: auto;"></div>
     </div>
-
+  
+    <footer style="text-align: center; margin-top: 0px; font-size: 16px; font-family: 'Roboto', sans-serif; color: #555;">
+      <p>
+        Data Sources: <a href="https://ec.europa.eu/eurostat/databrowser/view/hlth_silc_02$dv_381/default/table?lang=en&category=qol.qol_hlt.qol_hlt_st" target="_blank">Eurostat</a>, 
+        <a href="https://data-explorer.oecd.org/" target="_blank">OECD</a>, and 
+        <a href="https://europa.eu/eurobarometer/surveys/detail/2668" target="_blank">Eurobarometer</a><br>
+        Image Source: <a href="https://commons.wikimedia.org/wiki/Main_Page" target="_blank">Wikimedia</a>.
+      </p>
+      <p style="font-size: 17px;">
+        Designed and developed by Hareem Raza and Qasim Khan for Visual Analytics course at CentraleSupélec, 2025<br>
+      </p>
+    </footer>
+    
+    
 </body>
 
 </html>

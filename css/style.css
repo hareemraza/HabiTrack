@@ -1,5 +1,5 @@
 body {
-  font-family: 'Roboto', Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,27 +14,35 @@ h1 {
   text-align: center;
   font-size: 3rem;
   color: #222; 
-  font-weight: 700; 
-  margin-bottom: 10px;
+  font-weight: 500; 
+  margin-bottom: 0px;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0.75px; /* Slightly increase spacing */
 }
 
 h2 {
   text-align: center;
   font-size: 2rem;
   color: #222; 
-  font-weight: 700; 
+  font-weight: 500; 
   margin-bottom: 10px;
 }
 
 .subtitle {
   text-align: center;
   font-family: 'Roboto', sans-serif;
-  font-size: 19px; 
+  font-size: 1.4rem; 
   font-weight: 400; 
   color: #393838; 
-  margin-top: 10px;
+  margin-top: 0px;
   margin-bottom: 20px; 
 }
+
+.text {
+  font-family: 'Roboto', Arial, sans-serif;
+  color: #333;
+}
+
 
 #controls {
   margin-bottom: 20px;
@@ -140,3 +148,32 @@ svg {
   margin-top: 20px;
   text-align: center;
 }
+
+footer {
+  text-align: center;
+  margin-top: 30px; /* Reduced margin for even spacing */
+  font-size: 16px; /* Slightly increased text size for better readability */
+  font-family: 'Roboto', sans-serif;
+  color: #555;
+  line-height: 1; /* Added line height for better spacing between lines */
+}
+
+footer a {
+  color: #0073e6; 
+  text-decoration: none;
+  transition: color 0.5s ease, text-decoration 0.3s ease;
+}
+
+footer a:hover {
+  color: #005bb5; 
+  text-decoration: underline; 
+}
+
+footer p {
+  margin: 8px 0; /* Consistent spacing between paragraphs */
+}
+
+footer p:last-child {
+  margin-bottom: 0; /* Ensures no extra spacing below the last paragraph */
+}
+

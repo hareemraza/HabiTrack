@@ -2,15 +2,15 @@ const widthHC = 1200;
 const heightHC = 700;
 let selectedCountry = null;
 
-// Create SVG container
 const svgHC = d3
   .select("#honeycomb")
   .append("svg")
   .attr("width", widthHC)
-  .attr("height", heightHC);
+  .attr("height", heightHC)
+  .style("margin-bottom", "10px");
   // .style("border", "1px solid #ccc");
-// Add Title
-svgHC
+
+  svgHC
   .append("text")
   .attr("x", widthHC / 2)
   .attr("y", 40)
@@ -30,7 +30,6 @@ let healthDataAll = [];
 let sportsDataAll = [];
 const countries = ["France", "Italy", "Netherlands"];
 
-// Color scale
 const colorScaleHC = d3.scaleOrdinal()
   .domain(countries)
   .range(["rgb(0, 112, 192)", "rgb(0, 128, 0)", "rgb(255, 165, 0)"]);
@@ -48,11 +47,11 @@ const tooltipHC = d3
   .append("div")
   .attr("class", "tooltiphc")
   .style("position", "absolute")
-  .style("background", "#333")
-  .style("color", "#fff")
+  .style("background", "#fff")
+  .style("color", "#333")
   .style("padding", "6px")
   .style("border-radius", "4px")
-  .style("font-size", "12px")
+  .style("font-size", "16px")
   .style("visibility", "hidden"); // hidden by default
 
 
@@ -288,10 +287,10 @@ function drawCircles(circles, classPrefix, metricInfo, allMetrics) {
 
     // 4) Build tooltip HTML
     let tooltipHTML = `
-      <strong>${info.label}</strong><br>
-      <em>${info.hoverText}</em><br>
-      <span>${d.country}</span><br>
-      <span>${timesString}</span>
+      <span><strong>${d.country}</strong></span><br>
+      <span>${info.label} <strong>${timesString}</strong></span><br>
+      <br><br>
+      <span> 💡 More about ${info.label}: <br> ${info.hoverText}</span>
     `;
 
     tooltipHC
@@ -357,7 +356,7 @@ const rankSummary = svgHC.append("text")
   .attr("x", xFlag * 1.25)
   .attr("y", yFlag * 1.35)
   .attr("text-anchor", "middle")
-  .style("font-size", "14px")
+  .style("font-size", "16px")
   .style("fill", "#444");       // a softer color than pure black
 
 // 1) First line
@@ -366,7 +365,7 @@ rankSummary
   .attr("x", xFlag * 1.25 + 5)  // re-assign x so each line is centered
   .attr("dy", "0")             // no vertical offset for the first line
   .style("font-weight", "bold")
-  .text(`Ranked 1st: ${firstCount} times`);
+  .text(`Ranked 1st across ${firstCount} categories`);
 
 // 2) Second line
 rankSummary
@@ -374,7 +373,7 @@ rankSummary
   .attr("x", xFlag * 1.3 + 8)
   .attr("dy", "1.2em")         // move ~1.2 line-heights down
   .style("font-weight", "normal")
-  .text(`2nd: ${secondCount} times`);
+  .text(` 2nd across ${secondCount} categories`);
 
 // 3) Third line
 rankSummary
@@ -382,7 +381,7 @@ rankSummary
   .attr("x", xFlag * 1.3 + 8)
   .attr("dy", "1.2em")
   .style("font-weight", "normal")
-  .text(`3rd: ${thirdCount} times`);
+  .text(` 3rd across ${thirdCount} categories`);
 
   
     } else {
@@ -449,13 +448,13 @@ function highlightByCountry(country) {
 
   // If we do have a country selected:
   svgHC.selectAll("circle")
-    .transition().duration(300)
+    .transition().duration(100)
     .style("opacity", d => d.country === country ? 1 : 0.2)
     .attr("stroke-width", d => d.country === country ? 3 : 1);
 
   // Similarly dim text for other countries
   svgHC.selectAll("text.bmi-circles, text.sph-circles, text.freq-circles, text.vigor-circles, text.fruit-circles, text.veg-circles")
-  .transition().duration(300)
+  .transition().duration(100)
   .style("opacity", d => d.country === country ? 1 : 0.2);
 
 
@@ -594,7 +593,7 @@ function updateAll(year) {
 // that returns the "average" for that metric.
 const metricInfo = {
   "bmi-circles": {
-    label: "Normal BMI",
+    label: "Healthy BMI",
     hoverText: "Perentage of students with a normal BMI between 18.5 and 24.9.",
     getAvg: () => {
       // For demonstration, suppose we store the average
@@ -607,7 +606,7 @@ const metricInfo = {
   },
   "sph-circles": {
     label: "Good SPH",
-    hoverText: "How many consider their health as 'good' or better.",
+    hoverText: "Percentage of students that consider themselves healthy",
     getAvg: () => {
       let sum = 0, count = 0;
       sphValues.forEach(d => { sum += d.value; count++; });
@@ -616,7 +615,7 @@ const metricInfo = {
   },
   "freq-circles": {
     label: "Students Exercising Regularly",
-    hoverText: "How many students exercise atleast once a week consistently.",
+    hoverText: "Percentage of students that exercise consistently.",
     getAvg: () => {
       let sum = 0, count = 0;
       freqValues.forEach(d => { sum += d.value; count++; });
@@ -625,7 +624,7 @@ const metricInfo = {
   },
   "vigor-circles": {
     label: "Students Exercising Rigorously",
-    hoverText: "How many students spend atleast 30 minutes doing moderate or vigorous exercise.",
+    hoverText: "Percentage of students doing moderate or vigorous exercise regularly",
     getAvg: () => {
       let sum = 0, count = 0;
       vigorValues.forEach(d => { sum += d.value; count++; });
@@ -634,7 +633,7 @@ const metricInfo = {
   },
   "fruit-circles": {
     label: "Regular Fruit Eaters",
-    hoverText: "How many students maintain a consistent supply of fruits in their daily diet.",
+    hoverText: "Percentage of students maintaining a consistent supply of fruits in their daily diet.",
     getAvg: () => {
       let sum = 0, count = 0;
       fruitValues.forEach(d => { sum += d.value; count++; });
@@ -643,7 +642,7 @@ const metricInfo = {
   },
   "veg-circles": {
     label: "Regular Fruit Eaters",
-    hoverText: "How many students maintain a consistent supply of vegetables in their daily diet.",
+    hoverText: "Percentage of students maintaining a consistent supply of veggies in their daily diet.",
     getAvg: () => {
       let sum = 0, count = 0;
       vegValues.forEach(d => { sum += d.value; count++; });
@@ -666,10 +665,8 @@ const metricInfo = {
   drawCircles(fruitCircles, "fruit-circles", metricInfo, allMetrics);
   drawCircles(vegCircles, "veg-circles", metricInfo, allMetrics);
 
-
-
   // Titles, etc. remain the same
-  drawRectTitle(centerBMI, "Normal BMI", "bmi-title");
+  drawRectTitle(centerBMI, "Healthy BMI", "bmi-title");
   drawRectTitle(centerSPH, "Good SPH", "sph-title");
   drawRectTitle(topLeftRect, "Students Exercising Regularly", "freq-title");
   drawRectTitle(topRightRect, "Regular Fruit Eaters", "fruit-title");

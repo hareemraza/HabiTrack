@@ -1,5 +1,4 @@
 function drawLeaderboard(containerId, data, yAxisVariable = null) {
-  // Clear previous SVG content completely
   d3.select(`#${containerId}`).html("");
 
   let countryData;
@@ -13,14 +12,11 @@ function drawLeaderboard(containerId, data, yAxisVariable = null) {
       return { country, value: averageValue };
     });
   } else {
-    // Use hardcoded data directly
     countryData = data;
   }
 
-  // Sort countries by value in descending order
   const sortedData = countryData.sort((a, b) => b.value - a.value);
 
-  // Create SVG container
   const svg = d3.select(`#${containerId}`).append("svg")
     .attr("viewBox", "0 0 800 600")
     .attr("width", 800)
@@ -28,7 +24,6 @@ function drawLeaderboard(containerId, data, yAxisVariable = null) {
     .style("margin", "auto")
     .style("display", "block");
 
-  // Define gradients for bars (only once per container)
   if (!document.getElementById(`gradient-defs-${containerId}`)) {
     const defs = svg.append("defs").attr("id", `gradient-defs-${containerId}`);
     const gradients = {
@@ -82,7 +77,6 @@ function drawLeaderboard(containerId, data, yAxisVariable = null) {
     Netherlands: { bmi: "3rd", sph: "1st" },
   };
 
-  // Draw bars, flags, and labels
   sortedData.forEach((d, i) => {
     svg.append("rect")
       .attr("x", xPositions[i])
@@ -95,8 +89,8 @@ function drawLeaderboard(containerId, data, yAxisVariable = null) {
         tooltip.style("display", "block")
           .html(`
             <strong>${d.country}</strong><br>
-            Ranked <strong>${rankings[d.country].bmi}</strong> for students with the healthiest BMI levels.<br>
-            Ranked <strong>${rankings[d.country].sph}</strong> for students with the best perception of their health.
+            Ranked <strong>${rankings[d.country].bmi}</strong> for healthiest BMI levels.<br>
+            Ranked <strong>${rankings[d.country].sph}</strong> for best self-perception of health.
           `);
       })
       .on("mousemove", (event) => {
@@ -154,13 +148,12 @@ function initializeTabs(data) {
     document.querySelectorAll(".tab-button").forEach(el => el.classList.remove("active"));
     healthTab.classList.add("active");
 
-    // Draw leaderboard using hardcoded data for Health Factors
-    const hardcodedHealthData = [
-      { country: "Netherlands", value: 90 }, // 1st
-      { country: "France", value: 80 }, // 2nd
-      { country: "Italy", value: 70 }, // 3rd
+    const phyHealthData = [
+      { country: "Netherlands", value: 90 }, 
+      { country: "France", value: 80 }, 
+      { country: "Italy", value: 70 }, 
     ];
-    drawLeaderboard("health-chart", hardcodedHealthData);
+    drawLeaderboard("health-chart", phyHealthData);
   });
 }
 

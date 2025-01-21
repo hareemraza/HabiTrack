@@ -173,8 +173,8 @@ const legendTitleFont = "18px";
 const legendLabelFont = "17px";
 
 // Default toggles
-let showTrendlines = true;
-let viewComparison = false; 
+let showTrendlines = false;
+let viewComparison = true; 
 
 // Trendline Toggle
 const trendlineToggleGroup = legendGroup.append("g")
@@ -207,7 +207,7 @@ trendlineToggleGroup.append("foreignObject")
       }
     </style>
     <div class="checkbox-container">
-      <input type="checkbox" id="trendline-toggle" checked>
+      <input type="checkbox" id="trendline-toggle">
       <label for="trendline-toggle">Show Trendlines</label>
     </div>
   `);
@@ -245,7 +245,7 @@ comparisonToggleGroup.append("foreignObject")
       }
     </style>
     <div class="checkbox-container">
-      <input type="checkbox" id="comparison-toggle">
+      <input type="checkbox" id="comparison-toggle" checked>
       <label for="comparison-toggle">Compare Scaled Axes</label>
     </div>
   `);
@@ -336,8 +336,8 @@ svg
   .attr("y", height + 50)
   .attr("text-anchor", "middle")
   .style("font-family", "Roboto")
-  .style("font-size", "16px")
-  .style("font-weight", "500")
+  .style("font-size", "18px")
+  .style("font-weight", "400")
   .style("fill", "black")
   .text("Proportion of Students with Healthy BMI (%)");
 
@@ -347,8 +347,8 @@ svg
   .attr("y", height + 50)
   .attr("text-anchor", "middle")
   .style("font-family", "Roboto")
-  .style("font-size", "16px")
-  .style("font-weight", "500")
+  .style("font-size", "18px")
+  .style("font-weight", "400")
   .style("fill", "black")
   .text("Proportion of Students with Good SPH (%)");
 
@@ -361,8 +361,8 @@ const yAxisLabel = svg
   .attr("dy", "1em")
   .attr("text-anchor", "middle")
   .style("font-family", "Roboto")
-  .style("font-size", "16px")
-  .style("font-weight", "500")
+  .style("font-size", "18px")
+  .style("font-weight", "400")
   .style("fill", "black");
 
 let healthData, sportsData, allData;
@@ -511,8 +511,8 @@ function updateScales() {
   xAxisHealthyG.call(d3.axisBottom(xScaleHealthy).ticks(6));
   xAxisSPHG.call(d3.axisBottom(xScaleSPH).ticks(6));
 
-  xAxisHealthyG.selectAll("text").style("font-size","13px");
-  xAxisSPHG.selectAll("text").style("font-size","13px");
+  xAxisHealthyG.selectAll("text").style("font-size","14px");
+  xAxisSPHG.selectAll("text").style("font-size","14px");
 
   colorScale.domain().forEach(country => {
     const gradId = `year-gradient-${country.replace(/\s+/g, '-')}`;
@@ -661,7 +661,7 @@ function updatePlot(yAxisVariable) {
   const yAccessor = d => d[yAxisVariable];
   yScale.domain(d3.extent(filteredData, yAccessor)).nice();
   yAxis.transition().duration(1000).call(d3.axisLeft(yScale).ticks(6));
-  yAxis.selectAll("text").style("font-size","13px");
+  yAxis.selectAll("text").style("font-size","14px");
 
   function drawPoint(selection, xAccessorFn, yAccessorFn, isLeftPanel, dataType) {
     if (dataType === "health") {

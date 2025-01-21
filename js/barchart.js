@@ -2,24 +2,20 @@
 document.addEventListener("DOMContentLoaded", function () {
     let allData = [];
 
-    // Define colors for each category within each country
     const countryColors = {
         France: { Normal: "#4682B4", Overweight: "#5A9BD4", Obese: "#87CEEB" },
         Italy: { Normal: "#228B22", Overweight: "#32CD32", Obese: "#7CFC00" },
         Netherlands: { Normal: "#FF8C00", Overweight: "#FFA54D", Obese: "#FFD27F" }
     };
 
-    // Load the CSV data
     d3.csv("data/sports_data.csv").then(function (data) {
         allData = data.filter(d => d.Year === "2022"); // Filter only for the year 2022
         createCountriesChart();
         createCategoriesChart();
     });
 
-    // Handle tab switching
     document.querySelectorAll(".tab-button").forEach(button => {
         button.addEventListener("click", function () {
-            // Remove active class from all buttons and contents
             document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
             document.querySelectorAll(".tab-content").forEach(content => content.classList.remove("active"));
 
@@ -94,8 +90,6 @@ document.addEventListener("DOMContentLoaded", function () {
             //.attr("transform", `translate(${(width - legendWidth) / 2}, -40)`); // Adjust the y-coordinate to position above the plot
             .attr("transform", `translate(${(width - legendWidth) / 2 + 300}, -40)`);
 
-    
-    
         // Add gradient bars for each country
         let legendOffset = 10;
         Object.keys(countryColors).forEach(country => {
@@ -179,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const svg = d3.select(containerId)
             .append("svg")
             .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom + 50) // Extra space for the legend
+            .attr("height", height + margin.top + margin.bottom) // Extra space for the legend
             .append("g")
             .attr("transform", `translate(${margin.left}, ${margin.top})`);
     
@@ -258,7 +252,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .style("border", "1px solid black")
             .style("padding", "5px")
             .style("border-radius", "5px")
-            .style("font-size", "12px");
+            .style("font-size", "14px");
     
         // Hover interaction
         bars.on("mouseover", function (event, d) {
@@ -389,7 +383,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .style("border", "1px solid black")
             .style("padding", "5px")
             .style("border-radius", "5px")
-            .style("font-size", "12px");
+            .style("font-size", "14px");
     
         // Add horizontal line for hover interaction
         const hoverLine = svg.append("line")
@@ -443,13 +437,13 @@ document.addEventListener("DOMContentLoaded", function () {
             ];
     
             const legend = svg.append("g")
-                .attr("transform", `translate(${width - margin.right - 100}, 0)`); // Adjust position
+                .attr("transform", `translate(${width - margin.right - 100}, -10)`); // Adjust position
     
             // Add legend title
             legend.append("text")
                 .attr("x", 0)
                 .attr("y", 0)
-                .style("font-size", "14px")
+                .style("font-size", "16px")
                 .style("font-weight", "bold")
                 .text("Country");
     
@@ -459,20 +453,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 legend.append("rect")
                     .attr("x", 0)
                     .attr("y", 20 + i * 20) // Adjust y position for each item
-                    .attr("width", 12)
-                    .attr("height", 12)
+                    .attr("width", 14)
+                    .attr("height", 14)
                     .attr("fill", d.color);
     
                 // Add country name
                 legend.append("text")
                     .attr("x", 20)
                     .attr("y", 30 + i * 20) // Align with rectangles
-                    .style("font-size", "12px")
+                    .style("font-size", "13px")
                     .text(d.country);
             });
         }
     
-        createSimpleLegend(svg, width, margin);
+        
+       createSimpleLegend(svg, width, margin);
     }
 
     
