@@ -129,13 +129,13 @@ function drawLeaderboard(containerId, data, yAxisVariable = null) {
 }
 
 function initializeTabs(data) {
-  const dietaryTab = document.querySelector(".tab-button[data-tab='dietary-factors']");
-  const healthTab = document.querySelector(".tab-button[data-tab='health-factors']");
+  const dietaryTab = document.querySelector(".tab-button2[data-tab='dietary-factors']");
+  const healthTab = document.querySelector(".tab-button2[data-tab='health-factors']");
 
   dietaryTab.addEventListener("click", () => {
-    document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
+    document.querySelectorAll(".tab-content2").forEach(el => el.classList.remove("active"));
     document.querySelector("#dietary-factors").classList.add("active");
-    document.querySelectorAll(".tab-button").forEach(el => el.classList.remove("active"));
+    document.querySelectorAll(".tab-button2").forEach(el => el.classList.remove("active"));
     dietaryTab.classList.add("active");
 
     // Draw leaderboard using actual data for Dietary Factors
@@ -143,9 +143,9 @@ function initializeTabs(data) {
   });
 
   healthTab.addEventListener("click", () => {
-    document.querySelectorAll(".tab-content").forEach(el => el.classList.remove("active"));
+    document.querySelectorAll(".tab-content2").forEach(el => el.classList.remove("active"));
     document.querySelector("#health-factors").classList.add("active");
-    document.querySelectorAll(".tab-button").forEach(el => el.classList.remove("active"));
+    document.querySelectorAll(".tab-button2").forEach(el => el.classList.remove("active"));
     healthTab.classList.add("active");
 
     const phyHealthData = [

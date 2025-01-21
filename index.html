@@ -70,12 +70,12 @@
     border-bottom: 3px solid #000; 
   }
 
-  .tab-content {
-    display: none;
-  }
-
   .tab-content.active {
     display: block;
+  }
+
+  .tab-content {
+    display: none;
   }
 </style>
       
@@ -134,16 +134,52 @@
       Let’s take a quick look at the country rankings in our summary leaderboards for dietary and physical factors.
     </p>
   
-    <div class="tabs">
-      <button class="tab-button active" data-tab="dietary-factors">Dietary Factors</button>
-      <button class="tab-button" data-tab="health-factors">Physical Activity</button>
+    <!-- NEW CLASS NAMES FOR SECOND SET OF TABS -->
+    <div class="tabs2">
+      <button class="tab-button2 active" data-tab="dietary-factors">Dietary Factors</button>
+      <button class="tab-button2" data-tab="health-factors">Physical Activity</button>
     </div>
-      <div id="dietary-factors" class="tab-content active">
+    <div id="dietary-factors" class="tab-content2 active">
       <div id="dietary-chart" style="width: 100%; height: auto;"></div>
     </div>
-    <div id="health-factors" class="tab-content">
+    <div id="health-factors" class="tab-content2">
       <div id="health-chart" style="width: 100%; height: auto;"></div>
     </div>
+
+    <!-- CSS for the second set of tabs -->
+    <style>
+      .tabs2 {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #ddd;
+      }
+      .tab-button2 {
+        font-family: 'Roboto', sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+        padding: 10px 15px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        color: #555;
+        transition: color 0.3s ease, border-bottom 0.3s ease;
+      }
+      .tab-button2:hover {
+        color: #222;
+      }
+      .tab-button2.active {
+        color: #000;
+        font-weight: 500;
+        border-bottom: 3px solid #000;
+      }
+      .tab-content2 {
+        display: none;
+      }
+      .tab-content2.active {
+        display: block;
+      }
+    </style>
   
     <footer style="text-align: center; margin-top: 0px; font-size: 16px; font-family: 'Roboto', sans-serif; color: #555;">
       <p>
