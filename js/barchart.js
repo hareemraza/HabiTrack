@@ -271,9 +271,9 @@ document.addEventListener("DOMContentLoaded", function () {
             // Show tooltip
             tooltip
                 .style("visibility", "visible")
-                .html(`Country: <strong>${d.country}</strong><br>
-                       Category: <strong>${d.category}</strong><br>
-                       Percentage: <strong>${d.value.toFixed(1)}%</strong>`);
+                .html(`
+                       <strong>${d.category}</strong> BMI<br>
+                       <strong>${d.value.toFixed(1)}%</strong> Students`);
         })
             .on("mousemove", function (event) {
                 tooltip
@@ -408,9 +408,9 @@ document.addEventListener("DOMContentLoaded", function () {
             // Show tooltip
             tooltip
                 .style("visibility", "visible")
-                .html(`Country: <strong>${d.country}</strong><br>
-                       Category: <strong>${d.category}</strong><br>
-                       Percentage: <strong>${d.value.toFixed(1)}%</strong>`);
+                .html(`<strong>${d.country}</strong><br>
+                       <strong>${d.category}</strong> BMI<br>
+                       <strong>${d.value.toFixed(1)}%</strong> Students`);
         })
             .on("mousemove", function (event) {
                 tooltip
