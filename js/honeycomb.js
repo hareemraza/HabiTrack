@@ -61,11 +61,6 @@ const tooltipHC = d3
 d3.csv("data/health_data.csv").then(data => {
   healthDataAll = data;
   healthDataAll.forEach(d => {
-    d.Year = d.Year;
-    d.Country = d.Country;
-    d.Sex = d.Sex;
-    d["SPH"] = +d["SPH"];
-    d["Healthy (%)"] = +d["Healthy (%)"];
     d["Fruit Consumption (%)"] = +d["Fruit Consumption (%)"];
     d["Vegetable Consumption (%)"] = +d["Vegetable Consumption (%)"];
   });
@@ -75,11 +70,12 @@ d3.csv("data/health_data.csv").then(data => {
 d3.csv("data/sports_data.csv").then(data => {
   sportsDataAll = data;
   sportsDataAll.forEach(d => {
-    d.Year = d.Year;
-    d.Country = d.Country;
+    d["SPH"] = +d["SPH"];
+    d["Healthy (%)"] = +d["Healthy (%)"];
   });
   if (healthDataAll.length > 0) updateAll("2022");
 });
+
 
 
 /* ---------------------------------------------------
@@ -508,7 +504,7 @@ function drawRectTitle(rect, label, classPrefix) {
 
 // Return array of { country, value } sorted desc by value
 function getBmiData(year) {
-  const filtered = healthDataAll.filter(d => d.Year === year && d.Sex === "Total");
+  const filtered = sportsDataAll.filter(d => d.Year === year);
   return countries.map(c => ({
     country: c,
     value: filtered.find(d => d.Country === c)["Healthy (%)"]
@@ -516,7 +512,7 @@ function getBmiData(year) {
 }
 
 function getSphData(year) {
-  const filtered = healthDataAll.filter(d => d.Year === year && d.Sex === "Total");
+  const filtered = sportsDataAll.filter(d => d.Year === year);
   return countries.map(c => ({
     country: c,
     value: filtered.find(d => d.Country === c)["SPH"]
