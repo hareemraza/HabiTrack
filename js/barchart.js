@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const countryColors = {
         France: { Normal: "#4682B4", Overweight: "#5A9BD4", Obese: "#87CEEB" },
-        Italy: { Normal: "#228B22", Overweight: "#32CD32", Obese: "#7CFC00" },
+        Italy: { Normal: "#228B22", Overweight: "#32CD32", Obese: "#A5D89A" },
         Netherlands: { Normal: "#FF8C00", Overweight: "#FFA54D", Obese: "#FFD27F" }
     };
 
