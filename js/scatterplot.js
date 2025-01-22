@@ -527,7 +527,6 @@ function updateScales() {
   });
 }
 
-// Updated drawTrendlines function to allow separate lines for each gender in Health data
 function drawTrendlines(filteredData, xScale, yScale, isLeftPanel, xAccessor, yAccessor, dataType) {
   if (!filteredData || filteredData.length === 0) return;
 

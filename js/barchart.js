@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     d3.csv("data/sports_data.csv").then(function (data) {
-        allData = data.filter(d => d.Year === "2022"); // Filter only for the year 2022
+        allData = data.filter(d => d.Year === "2022"); // Filter latest data (only for the year 2022)
         createCountriesChart();
         createCategoriesChart();
     });
@@ -59,10 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const legendWidth = 160;
         const legendHeight = 15;
     
-        // Gradient for the legend
         const defs = svg.append("defs");
-    
-        // Add gradients for all countries
         Object.keys(countryColors).forEach(country => {
             const gradient = defs.append("linearGradient")
                 .attr("id", `gradient-${country}`)
@@ -71,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 .attr("y1", "0%")
                 .attr("y2", "0%");
     
-            // Add stops for each health category
             gradient.append("stop")
                 .attr("offset", "0%")
                 .attr("stop-color", countryColors[country].Normal);
@@ -85,15 +81,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 .attr("stop-color", countryColors[country].Obese);
         });
     
-        // Add legend group above the chart
         const legend = svg.append("g")
-            //.attr("transform", `translate(${(width - legendWidth) / 2}, -40)`); // Adjust the y-coordinate to position above the plot
             .attr("transform", `translate(${(width - legendWidth) / 2 + 300}, -40)`);
 
-        // Add gradient bars for each country
         let legendOffset = 10;
         Object.keys(countryColors).forEach(country => {
-            // Add gradient bar
             legend.append("rect")
                 .attr("x", 0)
                 .attr("y", legendOffset)
@@ -101,18 +93,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 .attr("height", legendHeight)
                 .style("fill", `url(#gradient-${country})`);
     
-            // Add country label
             legend.append("text")
                 .attr("x", legendWidth + 10)
-                .attr("y", legendOffset + legendHeight / 2 + 5) // Center the text vertically
+                .attr("y", legendOffset + legendHeight / 2 + 5) 
                 .style("font-size", "12px")
                 .text(country);
     
-            legendOffset += legendHeight + 10; // Space between legend rows
+            legendOffset += legendHeight + 10; 
         });
     
-        // Add labels for gradient scale (Healthy, Overweight, Obese)
-        const labelOffset = legendOffset + 10; // Adjust for spacing below the last gradient
+        const labelOffset = legendOffset + 10; 
     
         legend.append("text")
             .attr("x", 0)
@@ -155,7 +145,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 };
             });
         }).flat();
-
         createGroupedBarChartCategory(groupedData, "#chart-container-categories", "categories");
     }
 
@@ -173,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const svg = d3.select(containerId)
             .append("svg")
             .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom) // Extra space for the legend
+            .attr("height", height + margin.top + margin.bottom) 
             .append("g")
             .attr("transform", `translate(${margin.left}, ${margin.top})`);
     
@@ -188,22 +177,19 @@ document.addEventListener("DOMContentLoaded", function () {
             .style("text-anchor", "middle")
             .style("font-size", "16px");
     
-        // Add y-axis
         svg.append("g")
             .call(d3.axisLeft(y).ticks(5))
             .style("font-size", "14px");
         
-        // Add y-axis label
         svg.append("text")
-        .attr("transform", "rotate(-90)") // Rotate the text to align with the y-axis
-        .attr("y", -margin.left + 0) // Position to the left of the y-axis
-        .attr("x", -(height / 2)) // Center vertically
-        .attr("dy", "1em") // Add some padding
+        .attr("transform", "rotate(-90)") 
+        .attr("y", -margin.left + 0) 
+        .attr("x", -(height / 2))
+        .attr("dy", "1em") 
         .style("text-anchor", "middle")
         .style("font-size", "16px")
         .text("Percentage of Students");
     
-        // Create groups for each set of bars
         const groups = svg.append("g")
             .selectAll("g")
             .data(labels.map(label => data.filter(d => mode === "countries" ? d.country === label : d.category)))
@@ -211,7 +197,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .append("g")
             .attr("transform", d => `translate(${x0(d[0][mode === "countries" ? "country" : "category"])}, 0)`);
     
-        // Add bars
         const bars = groups
             .selectAll("rect")
             .data(d => d)
@@ -224,7 +209,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .attr("fill", d => countryColors[d.country][d.category])
             .attr("class", d => `bar-${d.category}`);
     
-        // // Add labels on top of bars
         groups
             .selectAll("text")
             .data(d => d)
@@ -237,13 +221,11 @@ document.addEventListener("DOMContentLoaded", function () {
             .style("fill", "black")
             .text(d => `${d.value.toFixed(1)}%`);
     
-        // Add horizontal line for hover interaction
         const hoverLine = svg.append("line")
             .attr("stroke", "#704f0d")
             .attr("stroke-dasharray", "2")
             .attr("opacity", 0);
     
-        // Add tooltip
         const tooltip = d3.select(containerId)
             .append("div")
             .style("position", "absolute")
@@ -256,19 +238,16 @@ document.addEventListener("DOMContentLoaded", function () {
     
         // Hover interaction
         bars.on("mouseover", function (event, d) {
-            // Highlight bars of the same category
             d3.selectAll(`.bar-${d.category}`).attr("opacity", 1);
             d3.selectAll(`rect:not(.bar-${d.category})`).attr("opacity", 0.2);
     
-            // Show horizontal line
             hoverLine
                 .attr("x1", 0)
                 .attr("x2", width)
                 .attr("y1", y(d.value))
                 .attr("y2", y(d.value))
-                .attr("opacity", 1);
+                .attr("opacity", 0.75);
     
-            // Show tooltip
             tooltip
                 .style("visibility", "visible")
                 .html(`
@@ -281,16 +260,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     .style("left", `${event.pageX + 10}px`);
             })
             .on("mouseout", function () {
-                // Reset bar opacity
                 d3.selectAll("rect").attr("opacity", 1);
-    
-                // Hide horizontal line
                 hoverLine.attr("opacity", 0);
-    
-                // Hide tooltip
                 tooltip.style("visibility", "hidden");
             });
-    
         addGradientLegend(svg, width, margin);
     }
     
@@ -300,16 +273,14 @@ document.addEventListener("DOMContentLoaded", function () {
         const width = 1000 - margin.left - margin.right;
         const height = 500 - margin.top - margin.bottom;
     
-        // Extract unique categories and countries
+        // Extract BMI categories and countries
         const categories = Array.from(new Set(data.map(d => d.category)));
         const countries = Array.from(new Set(data.map(d => d.country)));
     
-        // Create scales
         const x0 = d3.scaleBand().domain(categories).range([0, width]).padding(0.2); // Categories on x-axis
         const x1 = d3.scaleBand().domain(countries).range([0, x0.bandwidth()]).padding(0.1); // Sub-bands for countries
         const y = d3.scaleLinear().domain([0, 100]).nice().range([height, 0]);
     
-        // Create SVG container
         const svg = d3.select(containerId)
             .append("svg")
             .attr("width", width + margin.left + margin.right)
@@ -317,7 +288,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .append("g")
             .attr("transform", `translate(${margin.left}, ${margin.top})`);
     
-        // Add x-axis
         svg.append("g")
             .attr("transform", `translate(0, ${height})`)
             .call(d3.axisBottom(x0).tickSizeOuter(0))
@@ -325,22 +295,19 @@ document.addEventListener("DOMContentLoaded", function () {
             .style("text-anchor", "middle")
             .style("font-size", "16px");
     
-        // Add y-axis
         svg.append("g")
             .call(d3.axisLeft(y).ticks(5))
             .style("font-size", "14px");
         
-        // Add y-axis label
         svg.append("text")
-        .attr("transform", "rotate(-90)") // Rotate the text to align with the y-axis
-        .attr("y", -margin.left + 0) // Position to the left of the y-axis
-        .attr("x", -(height / 2)) // Center vertically
-        .attr("dy", "1em") // Add some padding
+        .attr("transform", "rotate(-90)") 
+        .attr("y", -margin.left + 0)
+        .attr("x", -(height / 2)) 
+        .attr("dy", "1em")
         .style("text-anchor", "middle")
         .style("font-size", "16px")
         .text("Percentage of Students");
             
-        // Create groups for each category
         const groups = svg.append("g")
             .selectAll("g")
             .data(categories.map(category => data.filter(d => d.category === category)))
@@ -354,27 +321,25 @@ document.addEventListener("DOMContentLoaded", function () {
             .data(d => d)
             .enter()
             .append("rect")
-            .attr("x", d => x1(d.country)) // Position bars within each category
-            .attr("y", d => y(d.value)) // Height based on value
-            .attr("width", x1.bandwidth()) // Bar width based on x1 scale
-            .attr("height", d => height - y(d.value)) // Bar height
-            .attr("fill", d => countryColors[d.country][d.category]) // Color based on country and category
-            .attr("class", d => `bar-${d.country}`); // Add a class for hover effects
+            .attr("x", d => x1(d.country))
+            .attr("y", d => y(d.value))
+            .attr("width", x1.bandwidth()) 
+            .attr("height", d => height - y(d.value)) 
+            .attr("fill", d => countryColors[d.country][d.category]) 
+            .attr("class", d => `bar-${d.country}`); 
     
-        // Add labels on top of the bars
         groups
             .selectAll("text")
             .data(d => d)
             .enter()
             .append("text")
-            .attr("x", d => x1(d.country) + x1.bandwidth() / 2) // Center the label horizontally within the bar
-            .attr("y", d => y(d.value) - 5) // Position above the bar (5px above the bar's top)
+            .attr("x", d => x1(d.country) + x1.bandwidth() / 2) 
+            .attr("y", d => y(d.value) - 5) 
             .attr("text-anchor", "middle")
             .style("font-size", "12px")
-            .style("fill", "black") // Use black for better visibility outside the bars
+            .style("fill", "black") 
             .text(d => `${d.value.toFixed(1)}%`);
     
-        // Add tooltip
         const tooltip = d3.select(containerId)
             .append("div")
             .style("position", "absolute")
@@ -385,19 +350,15 @@ document.addEventListener("DOMContentLoaded", function () {
             .style("border-radius", "5px")
             .style("font-size", "14px");
     
-        // Add horizontal line for hover interaction
         const hoverLine = svg.append("line")
             .attr("stroke", "#704f0d")
             .attr("stroke-dasharray", "2")
             .attr("opacity", 0);
     
-        // Hover interaction
         bars.on("mouseover", function (event, d) {
-            // Highlight bars of the same country
             d3.selectAll(`.bar-${d.country}`).attr("opacity", 1);
             d3.selectAll(`rect:not(.bar-${d.country})`).attr("opacity", 0.2);
     
-            // Show horizontal line
             hoverLine
                 .attr("x1", 0)
                 .attr("x2", width)
@@ -405,7 +366,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 .attr("y2", y(d.value))
                 .attr("opacity", 1);
     
-            // Show tooltip
             tooltip
                 .style("visibility", "visible")
                 .html(`<strong>${d.country}</strong><br>
@@ -418,17 +378,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     .style("left", `${event.pageX + 10}px`);
             })
             .on("mouseout", function () {
-                // Reset bar opacity
                 d3.selectAll("rect").attr("opacity", 1);
-    
-                // Hide horizontal line
                 hoverLine.attr("opacity", 0);
-    
-                // Hide tooltip
                 tooltip.style("visibility", "hidden");
             });
     
-        // Create legend
         function createSimpleLegend(svg, width, margin) {
             const legendData = [
                 { country: "France", color: "#4682B4" },
@@ -437,9 +391,7 @@ document.addEventListener("DOMContentLoaded", function () {
             ];
     
             const legend = svg.append("g")
-                .attr("transform", `translate(${width - margin.right - 100}, -10)`); // Adjust position
-    
-            // Add legend title
+                .attr("transform", `translate(${width - margin.right - 100}, -10)`); 
             legend.append("text")
                 .attr("x", 0)
                 .attr("y", 0)
@@ -447,28 +399,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 .style("font-weight", "bold")
                 .text("Country");
     
-            // Add legend items
             legendData.forEach((d, i) => {
-                // Add colored square
                 legend.append("rect")
                     .attr("x", 0)
-                    .attr("y", 20 + i * 20) // Adjust y position for each item
+                    .attr("y", 20 + i * 20) 
                     .attr("width", 14)
                     .attr("height", 14)
                     .attr("fill", d.color);
     
-                // Add country name
                 legend.append("text")
                     .attr("x", 20)
-                    .attr("y", 30 + i * 20) // Align with rectangles
+                    .attr("y", 30 + i * 20) 
                     .style("font-size", "13px")
                     .text(d.country);
             });
-        }
-    
-        
+        }     
        createSimpleLegend(svg, width, margin);
-    }
-
-    
+    }    
 });

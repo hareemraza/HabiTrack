@@ -3,7 +3,6 @@ function drawLeaderboard(containerId, data, yAxisVariable = null) {
 
   let countryData;
   if (yAxisVariable) {
-    // Compute averages from actual data if yAxisVariable is provided
     const countries = ["France", "Italy", "Netherlands"];
     countryData = countries.map(country => {
       const countryRows = data.filter(d => d.Country === country && d.Sex === "Total");
@@ -138,7 +137,6 @@ function initializeTabs(data) {
     document.querySelectorAll(".tab-button2").forEach(el => el.classList.remove("active"));
     dietaryTab.classList.add("active");
 
-    // Draw leaderboard using actual data for Dietary Factors
     drawLeaderboard("dietary-chart", data, "Fruit Consumption (%)");
   });
 
