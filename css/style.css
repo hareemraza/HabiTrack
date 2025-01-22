@@ -17,7 +17,7 @@ h1 {
   font-weight: 500; 
   margin-bottom: 0px;
   font-family: 'Roboto', sans-serif;
-  letter-spacing: 0.75px; /* Slightly increase spacing */
+  letter-spacing: 0.75px; 
 }
 
 h2 {
@@ -151,11 +151,11 @@ svg {
 
 footer {
   text-align: center;
-  margin-top: 30px; /* Reduced margin for even spacing */
-  font-size: 16px; /* Slightly increased text size for better readability */
+  margin-top: 30px; 
+  font-size: 16px; 
   font-family: 'Roboto', sans-serif;
   color: #555;
-  line-height: 1; /* Added line height for better spacing between lines */
+  line-height: 1; 
 }
 
 footer a {
@@ -170,10 +170,10 @@ footer a:hover {
 }
 
 footer p {
-  margin: 8px 0; /* Consistent spacing between paragraphs */
+  margin: 8px 0; 
 }
 
 footer p:last-child {
-  margin-bottom: 0; /* Ensures no extra spacing below the last paragraph */
+  margin-bottom: 0; 
 }
 
